@@ -1,0 +1,102 @@
+{
+  "expo": {
+    "name": "Techwelt",
+    "slug": "techwelt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],    
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow to access camera.",
+          "torchMode": "on"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification_icon.png",
+          "color": "#ffffff"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.ayaz.techwelt",
+      "supportsTablet": true,
+      "infoPlist":{
+        "NSLocationWhenInUseUsageDescription": "We need access to your location to provide you with personalized recommendations.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need access to your location to provide you with personalized recommendations even when the app is in the background.",
+        "NSCameraUsageDescription": "We need access camera for scan IMEI",
+        "UIBackgroundModes": ["audio", "bluetooth-central","fetch","location"],
+        "NSMicrophoneUsageDescription":"We need access Microphone for scan IMEI"
+      },
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.ayaz.techwelt",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "FLASHLIGHT",
+        "INTERNET",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "NOTIFICATIONS",
+        "android.permission.WAKE_LOCK",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "BACKGROUND_FETCH",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA_ROLL",
+        "AUDIO_RECORDING",
+        "SCHEDULE_EXACT_ALARM"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCkzRChTNNK4Zeffq5m9H0nX-Hia8im_UI"
+        }
+      }
+    },
+    "notification": {
+      "icon": "./assets/notification_icon.png",
+      "color": "#ffffff",
+      "androidMode": "default",
+      "androidCollapsedTitle": "Techwelt",
+      "iosDisplayInForeground": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "67f4f9f0-a4ac-4d9c-a186-f38d2384f3ab"
+      },
+      "backgroundFetch": {
+        "taskId": "com.transistorsoft.backgroundfetch",
+        "minimumInterval": 15,
+        "stopOnTerminate": false,
+        "startOnBoot": true
+      }
+    }    
+  }
+}

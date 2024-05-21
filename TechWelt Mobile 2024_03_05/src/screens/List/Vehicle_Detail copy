@@ -1,0 +1,216 @@
+import React, {useState, useEffect} from "react";
+import { TouchableOpacity, View, Text, ScrollView, StatusBar, StyleSheet, Image } from "react-native";
+import Header from "../Header";
+import { IconComponentProvider, Icon } from "@react-native-material/core";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
+import {useTranslation} from "react-i18next";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useSelector, useDispatch } from 'react-redux';
+
+export default function Vehicle_Detail({ navigation, route }) {
+  const {t} = useTranslation();
+  let { infos, index } = route.params;
+  const authReducer = useSelector(state => state.auth);
+  const [teltonika, setTeltonika] = useState([]);
+  useEffect(() => {
+    let aaa = infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.IOvalue;
+    let bbb = infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.IOvalue?.filter(obj => obj.dataId === 11)[0]?.dataValue;
+    console.log("@@infos:", bbb);
+    setTeltonika(infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]);
+  }, []);
+
+  return (
+    <View style={{flex:1, backgroundColor:'white'}}>
+      <StatusBar backgroundColor={"#364153"} barStyle={"light-content"} />
+      <Header back='true' screenName={t('vehicles_details')} curNavigation={navigation}></Header>
+      <ScrollView>
+      <View style={{backgroundColor:'#EFF3F6', width:wp('95%'), alignSelf:'center', marginTop:10, borderRadius:8, flexDirection:'row'}}>
+        <View style={{ flex: 1, flexDirection: 'column', marginLeft:10, marginRight:10}}>
+          <View style={[styles.v1,{marginTop:15}]}>
+            <View style={styles.v3}>
+              { infos.vehicle.title == "Car" ?
+                <Image 
+                source={require("../../../assets/type_car.png")} 
+                style={{alignSelf:'center', width: 23, height: 10, resizeMode: 'contain' }}/> 
+            :
+              <Image 
+                source={require("../../../assets/type_truck.png")} 
+                style={{alignSelf:'center', width: 20, height: 12, resizeMode: 'contain' }}/> 
+        }
+            </View>
+            <Text style={styles.title}>{t("vehicle_plate_no")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.vehicleName}</Text>
+            </View>
+          </View>
+          <View style={styles.v1}>
+            <Image 
+                source={require("../../../assets/vehicle_owner.png")} 
+                style={{alignSelf:'center', width: 33, height: 33, resizeMode: '' }}/> 
+            <Text style={styles.title}>{t("owner")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{authReducer.user.lname}</Text>
+            </View>
+          </View>
+          <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="tag-outline" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("device_type")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.deviceType}</Text>
+            </View>
+          </View>
+          <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="tag-outline" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("device_model")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.deviceModel}</Text>
+            </View>
+          </View>
+          <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="subtitles-outline" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("imei")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.deviceImei}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View style={{ backgroundColor:'#EFF3F6', width:wp('95%'), alignSelf:'center', marginTop:5, borderRadius:8, flexDirection:'row'}}>
+        <View style={{ flex: 1, flexDirection: 'column', marginLeft:10, marginRight:10}}>
+          <View style={[styles.v1,{marginTop:15}]}>
+            <View style={styles.v3}>
+              <Image 
+                source={require("../../../assets/engine_gray.png")} 
+                style={{alignSelf:'center', width: 20, height: 20, resizeMode: 'contain' }}/> 
+            </View>
+            <Text style={styles.title}>{t("ignition_status")} </Text>
+            <View style={styles.v2}>
+              {infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.ignition == "1" ?
+              <Text style={styles.value}>{t("on")}</Text>
+              :
+              <Text style={styles.value}>{t("off")}</Text>
+              }
+            </View>
+          </View>
+          {/* <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="speedometer" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("speed")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.speed}km/h</Text>
+            </View>
+          </View> */}
+          <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="camera" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("camera_type")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}></Text>
+            </View>
+          </View>
+          <View style={styles.v1}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="calendar-blank-outline" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("stopped_time")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}></Text>
+            </View>
+          </View>
+          <View style={[styles.v1,{marginBottom:15}]}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="sim" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("sim")} </Text>
+            <View style={{ flex: 1, flexDirection: 'column',alignItems: 'flex-end', justifyContent:'flex-end'}}>
+              <Text style={styles.value}>{t("sim_no")} {infos.vehicle.mobileNo}</Text>
+              <Text style={styles.value}>
+                {t("iccid")} : {infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.IOvalue?.filter(obj => obj.dataId === 11)[0]?.dataValue}
+                {infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.IOvalue?.filter(obj => obj.dataId === 14)[0]?.dataValue}</Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={()=>{
+                  console.log("@@@@Vehicle Location",infos)
+                  navigation.navigate("Map",{"infos" : infos})
+                }}
+                  >
+          <View style={[styles.v1,{marginBottom:15}]}>
+            <View style={styles.v3}>
+              <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+                <Icon name="map-marker-outline" size={20} color="#1E6B97" />
+              </IconComponentProvider>
+            </View>
+            <Text style={styles.title}>{t("address")} </Text>
+            <View style={styles.v2}>
+              <Text style={styles.value}>{infos.vehicle.teltonikas[infos.vehicle.teltonikas.length - 1]?.address}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        </View>
+      </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  v1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop:10,
+    marginBottom: 10
+  },
+  v2: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent:'flex-end'
+  },
+  v3: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: '#18567F21',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  icon: {
+    marginRight: 15,
+    width: 31,
+    height: 31,
+    resizeMode: 'contain'
+  },
+  title: {
+    marginLeft:15,
+    fontSize: 15,
+    color: 'black'
+  },
+  value: {
+    fontSize: 12,
+    color: '#18567F',
+  },
+});

@@ -1,0 +1,402 @@
+[
+    {
+        key: "FMB110",
+        value: "FMB110",
+        path: "./assets/Teltonika/FMB110_4000x4000_9.png"
+    },
+    {
+        key: "FMB120",
+        value: "FMB120",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB122",
+        value: "FMB122",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB125",
+        value: "FMB125",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB130",
+        value: "FMB130",
+        path: "./assets/Teltonika/FMB130_08.png"
+    },
+    {
+        key: "FMB202",
+        value: "FMB202",
+        path: "./assets/Teltonika/FMB202_009.png"
+    },
+    {
+        key: "FMB204",
+        value: "FMB204",
+        path: "./assets/Teltonika/FMB204_009.png"
+    },
+    {
+        key: "FMB208",
+        value: "FMB208",
+        path: "./assets/Teltonika/FMB208_09_Demo.png"
+    },
+    {
+        key: "FMB209",
+        value: "FMB209",
+        path: "./assets/Teltonika/FMB209_4000X4000_9.png"
+    },
+    {
+        key: "FMB225",
+        value: "FMB225",
+        path: "./assets/Teltonika/FMB225-front-2023-03-01_(cropped).png"
+    },
+    {
+        key: "FMB230",
+        value: "FMB230",
+        path: "./assets/Teltonika/FMB230-front-2023-03-01_(cropped).png"
+    },
+    {
+        key: "FMC125",
+        value: "FMC125",
+        path: "./assets/Teltonika/FMC125-MBIBO-2022-10-03_4000x4000_9.png"
+    },
+    {
+        key: "FMC130",
+        value: "FMC130",
+        path: "./assets/Teltonika/FMC130-ME1-2022-09-30_4000x4000-9.png"
+    },
+    {
+        key: "FMC13A",
+        value: "FMC13A",
+        path: "./assets/Teltonika/FMC13A_008.png"
+    },
+    {
+        key: "FMC225",
+        value: "FMC225",
+        path: "./assets/Teltonika/FMC225_4000x4000_9.png"
+    },
+    {
+        key: "FMC230",
+        value: "FMC230",
+        path: "./assets/Teltonika/FMC230-4000x4000-2022-10-03-005.png"
+    },
+    {
+        key: "FMM125",
+        value: "FMM125",
+        path: "./assets/Teltonika/FMM125_4000X4000_9.png"
+    },
+    {
+        key: "FMM130",
+        value: "FMM130",
+        path: "./assets/Teltonika/FMM130-QG5-2022-10-04_4000x4000-008.png"
+    },
+    {
+        key: "FMM13A",
+        value: "FMM13A",
+        path: "./assets/Teltonika/FMM13A_4000x4000_09.png"
+    },
+    {
+        key: "FMM230",
+        value: "FMM230",
+        path: "./assets/Teltonika/FMM230_4000x4000_9.png.png"
+    },
+    {
+        key: "MSP500",
+        value: "MSP500",
+        path: "./assets/Teltonika/MSP500-9-demo.png"
+    },
+    {
+        key: "FMB240",
+        value: "FMB240",
+        path: "./assets/Teltonika/FMB240_2.png"
+    },
+    {
+        key: "FMB641",
+        value: "FMB641",
+        path: "./assets/Teltonika/FMB641_4000X4000_9.png"
+    },
+    {
+        key: "FMC640",
+        value: "FMC640",
+        path: "./assets/Teltonika/FMC640_08.png"
+    },
+    {
+        key: "FMC650",
+        value: "FMC650",
+        path: "./assets/Teltonika/FMC650_08.png"
+    },
+    {
+        key: "FMM650",
+        value: "FMM650",
+        path: "./assets/Teltonika/FMM650_08.png"
+    },
+    {
+        key: "GH5200",
+        value: "GH5200",
+        path: "./assets/Teltonika/GH5200_demo_07.png"
+    },
+    {
+        key: "28",
+        value: "TAT100",
+        path: "./assets/Teltonika/TAT100-ASSET-TRACKER.png"
+    },
+    {
+        key: "TAT140",
+        value: "TAT140",
+        path: "./assets/Teltonika/TAT140_asset_tracker.png"
+    },
+    {
+        key: "TMT250",
+        value: "TMT250",
+        path: "./assets/Teltonika/TMT250_2_demo.png"
+    },
+    {
+        key: "FMB900",
+        value: "FMB900",
+        path: "./assets/Teltonika/FMB900_4000X4000_9.png"
+    },
+    {
+        key: "FMB910",
+        value: "FMB910",
+        path: "./assets/Teltonika/FMB910_4000X4000_9.png"
+    },
+    {
+        key: "FMB920",
+        value: "FMB920",
+        path: "./assets/Teltonika/FMB920_4000X4000_9.png"
+    },
+    {
+        key: "FMB930",
+        value: "FMB930",
+        path: "./assets/Teltonika/FMB930-4000X4000.9.png"
+    },
+    {
+        key: "FMB965",
+        value: "FMB965",
+        path: "./assets/Teltonika/FMB965-4000x4000-Camera_9.png"
+    },
+    {
+        key: "FMC920",
+        value: "FMC920",
+        path: "./assets/Teltonika/FMC920-QKIBO-2022-09-28-4000x4000-9.png"
+    },
+    {
+        key: "FMM920",
+        value: "FMM920",
+        path: "./assets/Teltonika/FMM920-Q3IBO-2022-09-28-4000x4000-9.png"
+    },
+    {
+        key: "FMB140",
+        value: "FMB140",
+        path: "./assets/Teltonika/FMB140_4000X4000_09.png"
+    },
+    {
+        key: "FMB150",
+        value: "FMB150",
+        path: "./assets/Teltonika/FMB150_4000X4000_09.png"
+    },
+    {
+        key: "FMC150",
+        value: "FMC150",
+        path: "./assets/Teltonika/FMC150-QJIBO-2022-10-05_4000x4000-9.png"
+    },
+    {
+        key: "FMM150",
+        value: "FMM150",
+        path: "./assets/Teltonika/FMM150-Q3IBO-2022-10-05_4000x4000-9.png"
+    },
+    {
+        key: "TFT100",
+        value: "TFT100",
+        path: "./assets/Teltonika/TFT100_01.png"
+    },
+    {
+        key: "TST100",
+        value: "TST100",
+        path: "./assets/Teltonika/TST100_demo_00.png"
+    },
+    {
+        key: "FM3001",
+        value: "FM3001",
+        path: "./assets/Teltonika/FM3001_4000X4000_9.png"
+    },
+    {
+        key: "FM3612",
+        value: "FM3612",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FM3622",
+        value: "FM3622",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FM36M1",
+        value: "FM36M1",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FM6300",
+        value: "FM6300",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FM6320",
+        value: "FM6320",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMA110",
+        value: "FMA110",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMA120",
+        value: "FMA120",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMA202",
+        value: "FMA202",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMA204",
+        value: "FMA204",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB630",
+        value: "FMB630",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB640",
+        value: "FMB640",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB962",
+        value: "FMB962",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB964",
+        value: "FMB964",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMM640",
+        value: "FMM640",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMU125",
+        value: "FMU125",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMU126",
+        value: "FMU126",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMU130",
+        value: "FMU130",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "MTB100",
+        value: "MTB100",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "TSM232",
+        value: "TSM232",
+        path: "./assets/Teltonika/FMB120_4000X4000_9.png"
+    },
+    {
+        key: "FMB010",
+        value: "FMB010",
+        path: "./assets/Teltonika/FMB010_4000X4000_9.png"
+    },
+    {
+        key: "FMB020",
+        value: "FMB020",
+        path: "./assets/Teltonika/FMB020-4000x4000-04.png"
+    },
+    {
+        key: "FMC800",
+        value: "FMC800",
+        path: "./assets/Teltonika/FMC800_4000x4000-3.png"
+    },
+    {
+        key: "FMM800",
+        value: "FMM800",
+        path: "./assets/Teltonika/FMM800_4000x4000.3.png"
+    },
+    {
+        key: "FMM80A",
+        value: "FMM80A",
+        path: "./assets/Teltonika/FMM80A-Q2IBO-2022-09-29-4000x4000-9.png"
+    },
+    {
+        key: "FMM880",
+        value: "FMM880",
+        path: "./assets/Teltonika/FMM800_4000x4000.png"
+    },
+    {
+        key: "FMP100",
+        value: "FMP100",
+        path: "./assets/Teltonika/FMP100_4000x4000_9.png.png"
+    },
+    {
+        key: "FMT100",
+        value: "FMT100",
+        path: "./assets/Teltonika/FMT100-9.png"
+    },
+    {
+        key: "FMB001",
+        value: "FMB001",
+        path: "./assets/Teltonika/FMB001_4000X4000_9.png"
+    },
+    {
+        key: "FMB002",
+        value: "FMB002",
+        path: "./assets/Teltonika/FMB002-4000x4000-4.png"
+    },
+    {
+        key: "FMB003",
+        value: "FMB003",
+        path: "./assets/Teltonika/FMB003_N-4000x4000-8.png"
+    },
+    {
+        key: "FMC001",
+        value: "FMC001",
+        path: "./assets/Teltonika/FMC001_4000X4000_9.png"
+    },
+    {
+        key: "FMC003",
+        value: "FMC003",
+        path: "./assets/Teltonika/FMC003_MCIBO_2022-08-19_4000x4000-9.png"
+    },
+    {
+        key: "FMC00A",
+        value: "FMC00A",
+        path: "./assets/Teltonika/FMC00A_4000x4000_9.png"
+    },
+    {
+        key: "FMM001",
+        value: "FMM001",
+        path: "./assets/Teltonika/FMM001-Q3IBO-2022-09-28-4000x4000-9.png"
+    },
+    {
+        key: "FMM003",
+        value: "FMM003",
+        path: "./assets/Teltonika/FMM003-Q3IBO-2022-09-29-4000x4000-9.png"
+    },
+    {
+        key: "FMM00A",
+        value: "FMM00A",
+        path: "./assets/Teltonika/FMM00A-Q2IBO-2022-09-29-4000x4000-9.png"
+    }
+]

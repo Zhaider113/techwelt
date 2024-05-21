@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715753706606",
+    "project_id": "techwelt-83fed",
+    "storage_bucket": "techwelt-83fed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715753706606:android:7ad6b77ac0f9cb5e5f827f",
+        "android_client_info": {
+          "package_name": "com.ayaz.techwelt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3aR7J9Ig2uhdKeAQOVu_AZl11v9kN8zM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
