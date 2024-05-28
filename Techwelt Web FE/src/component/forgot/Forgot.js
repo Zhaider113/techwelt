@@ -25,8 +25,9 @@ const Forgot = () => {
       return;
     }
     const resetData = {
-      email: "resetPass"
+      email: resetPass
     }
+    // console.log(resetPass)
     resetUser(resetData);
     navigate("/");
   }
@@ -47,7 +48,7 @@ const Forgot = () => {
                 <input
                   placeholder='Username or Email'
                   type='email'
-                  onChange={(i) => { setResetPass(i) }}
+                  onChange={(i) => { setResetPass(i.target.value) }}
                 />
               </div>
               <span className='reset'>Reset link will be send to your registered Email</span>

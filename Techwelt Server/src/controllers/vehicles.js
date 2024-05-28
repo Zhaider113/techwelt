@@ -306,21 +306,26 @@ module.exports = () => {
           for (let index = 0; index < vehicles.length; index++) {
             let isTeltonika = (vehicles[index].deviceType === "Teltonika");
             let mongoUrl = teltonikaUrl;
+            console.log(mongoUrl, "mogourl");
             if (!isTeltonika) mongoUrl = ruptelaUrl;
             const con = mongoose.createConnection(mongoUrl, connectOptions)
             con.on('connected', async function () {
               console.log("connected to ", mongoUrl)
               
               let tmpLat = 0, tmpLng = 0, address = "", stopTime = "", sendCommandDate = "", responseCommandDate = "";
+              console.log(vehicles[index].deviceImei, isTeltonika ? teltonikaSchema : ruptelaSchema)
               const modelA = con.model(vehicles[index].deviceImei, isTeltonika ? teltonikaSchema : ruptelaSchema);
-
+              console.log(modelA);
               const teltoObj1 = await modelA.find({lat:{$ne:-214.7483648}}).sort({ transferDate: -1 }).limit(1);
+              console.log(teltoObj1, "teltoObj1")
               if(teltoObj1 && teltoObj1.length > 0) {
                 tmpLat = teltoObj1[0].lat;
                 tmpLng = teltoObj1[0].lng;
               }
 
               const teltoObj2 = await modelA.find({address:{$ne:""}}).sort({ transferDate: -1 }).limit(1);
+              console.log(teltoObj2, "teltoObj2")
+              
               if(teltoObj2 && teltoObj2.length > 0) {
                 address = teltoObj2[0].address;
               }

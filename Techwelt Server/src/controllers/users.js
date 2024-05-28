@@ -368,6 +368,7 @@ module.exports = () => {
         });
         const hashedPassword = await bcrypt.hash(newpass, 10);
         await user.updateOne({ $set: { password: hashedPassword } });
+        console.log(newpass, "newpass")
         sendEmail("wuquianjie@gmail.com", "Reset Password", "Your New Password is \n" + newpass);
         res.status(200).send({ message: "Check your Email" })
       } else {

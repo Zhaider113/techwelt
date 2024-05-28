@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import mapboxgl from 'mapbox-gl';
 
 import "./Geofance.css";
@@ -9,6 +9,8 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 const Geofance = () => {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
+
+  const devices = useSelector((state) => state.devicesList.devices);
 
   const [center, setCenter] = useState({ lat: 30.3048216, lng: -9.4867983 });
   const [bound1, setBound1] = useState()
@@ -25,6 +27,8 @@ const Geofance = () => {
   const [circleCenter, setCircleCenter] = useState();
   const [users, setUsers] = useState([])
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
+  const [searchPlateText, setSearchPlateText] = useState("");
+  const [devicesData, setDevicesData] = useState(devices);
 
   const circleOptions = {
     fillColor: "coral",
@@ -59,7 +63,15 @@ const Geofance = () => {
   ]
 
   useEffect(() => {
-    setUsers(States)
+    setDevicesData(
+      devices?.filter((item) => {
+        return (!searchPlateText || item?.vehicle?.vehicleName.toLocaleLowerCase().includes(searchPlateText.toLocaleLowerCase()))
+      })
+    )
+  }, [searchPlateText, devices]);
+
+  useEffect(() => {
+    setUsers(States)    
     const onClick = (e) => {
       if (e.target !== dropdownRef.current) {
         setIsDropdownDisplayed(false)
@@ -107,12 +119,15 @@ const Geofance = () => {
 
   const handleChange = (e) => {
     const { name, checked } = e.target;
+    console.log(e.target)
     if (name === "allSelect") {
-      let tewmpUser = users.map((user) => { return { ...user, isChecked: checked } });
-      setUsers(tewmpUser)
+      console.log(name + "checkec"+ checked)
+      let tewmpUser = devicesData.map((user) => { return { ...user, isChecked: checked } });
+      setDevicesData(tewmpUser)
     } else {
-      let tewmpUser = users.map((user) => user.name === name ? { ...user, isChecked: checked } : user);
-      setUsers(tewmpUser)
+      console.log(name + "checkec"+ checked)
+      let tewmpUser = devicesData.map((user) => user.vehicle.vehicleName === name ? { ...user, isChecked: checked } : user);
+      setDevicesData(tewmpUser)
     }
   }
 
@@ -131,9 +146,9 @@ const Geofance = () => {
                 >
                   Geozone
                 </option>
-                <option style={{ color: "black" }}>hjksh</option>
+                {/* <option style={{ color: "black" }}>hjksh</option>
                 <option style={{ color: "black" }}>ljb</option>
-                <option style={{ color: "black" }}>lkh</option>
+                <option style={{ color: "black" }}>lkh</option> */}
               </select>
             </div>
             <div className="subsub2-sub1-geofence-div1 mx-5 my-1"></div>
@@ -151,16 +166,16 @@ const Geofance = () => {
               {isDropdownDisplayed && <div className='panel' style={{ zIndex: 9999 }} onClick={(e) => { e.stopPropagation() }} ref={dropdownRef}>
                 <div className='fieldAll' >
                   <input type='checkbox'
-                    onChange={handleChange} name='allSelect' checked={users.filter(user => user?.isChecked !== true).length < 1}
+                    onChange={handleChange} name='allSelect' checked={devicesData.filter(user => user?.isChecked !== true).length < 1}
                   />
                   <span >All Vehicles</span>
                 </div>
-                {users.map((user) => (
+                {devicesData.map((user) => (
                   <div className='field' >
                     <input type='checkbox'
-                      name={user.name} onChange={handleChange} checked={user?.isChecked || false}
+                      name={user.vehicle.vehicleName} onChange={handleChange} checked={user?.isChecked || false}
                     />
-                    <label >{user.name}</label>
+                    <label >{user.vehicle.vehicleName}</label>
                   </div>))}
               </div>}
             </div>

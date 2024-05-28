@@ -1,9 +1,9 @@
 import axios from "axios";
 
 if (process.env.REACT_APP_DEV_MODE === "TRUE")
-    axios.defaults.baseURL = "localhost:8888";
+    axios.defaults.baseURL = process.env.REACT_APP_URL;
 else
-    axios.defaults.baseURL = "localhost:8888";
+    axios.defaults.baseURL = process.env.REACT_APP_DEV_URL;
 console.log(process.env.REACT_APP_DEV_MODE, "process.env.REACT_APP_DEV_MODE", process.env.REACT_APP_DEV_URL)
 const getUserNameList = async (props) => {
     try {
