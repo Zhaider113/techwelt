@@ -193,7 +193,7 @@ const Geofance = () => {
         </div>
       </div>
       <div className="geofence-div2">
-        <div id='map-container' />
+<div id="map-container" style={{ width: '100%', height: '400px' }} />
         <div
           className="sub1-geofence-div2"
           style={{ border: zone1 }}
