@@ -4,192 +4,16 @@ import { CSVLink } from "react-csv";
 import DatePicker from "react-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-
+import { useDispatch, useSelector } from "react-redux";
+import {getAlerts} from '../../redux/actions/devices.js';
 import "react-datepicker/dist/react-datepicker.css";
 import "./Alerts.css";
 
-const AlertData = [
-  {
-    id: "1",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "2",
-    plate: "DXB U123455",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltas",
-  },
-  {
-    id: "3",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "4",
-    plate: "DXB U123455",
-    alert: "Enter Geofences",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltass",
-  },
-  {
-    id: "5",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "6",
-    plate: "DXB U123455",
-    alert: "Enter Geofences",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltas",
-  },
-  {
-    id: "7",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "8",
-    plate: "DXB U123455",
-    alert: "Enter Geofences",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltas",
-  },
-  {
-    id: "9",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "10",
-    plate: "DXB U123455",
-    alert: "Enter Geofences",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltass",
-  },
-  {
-    id: "11",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "12",
-    plate: "DXB U123455",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltass",
-  },
-  {
-    id: "13",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "14",
-    plate: "DXB U123455",
-    alert: "Enter Geofences",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltass",
-  },
-  {
-    id: "15",
-    plate: "DXB U12345",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "delta",
-  },
-  {
-    id: "16",
-    plate: "DXB U123455",
-    alert: "Enter Geofence",
-    location: {
-      gps: "24.35164,54.514485",
-      path: "AI Nahyan St,Duabi ,UAE",
-    },
-    time:"11/12/2023 10:31 PM",
-    company: "deltass",
-  }
-];
-
 const Alerts = () => {
+  const dispatch = useDispatch();
   const isMobile = useMediaQuery("(max-width: 768px)");
-
+  const AlertData = useSelector((state) => state.alertsList.alerts);
+  console.log(AlertData,'alerts')
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [searchPlateText, setSearchPlateText] = useState("");
@@ -200,13 +24,7 @@ const Alerts = () => {
   const [searchFold, setSearchFold] = useState(true);
 
   useEffect(() => {
-    setData(
-      AlertData.filter((item)=>{
-        return (!searchPlateText || item.plate.toLocaleLowerCase().includes(searchPlateText.toLocaleLowerCase())) 
-          && (!searchAlertText || item.alert.toLocaleLowerCase().includes(searchAlertText.toLocaleLowerCase())) 
-          && (searchCompanyText=="Company" ? item.company : (!searchCompanyText || item.company===searchCompanyText));
-      })
-    )
+    dispatch(getAlerts())
   }, [searchPlateText,searchAlertText,searchCompanyText]);
 
   const handlePlate = (event) => {
@@ -313,13 +131,6 @@ const Alerts = () => {
                     showTimeInput
                   />
                 </div>
-                <input
-                  className="field-input"
-                  type="numder"
-                  placeholder="IMEI"
-                  value={searchImeiText}
-                  onChange={handleImei}
-                />
                 <select
                   className="field-select"
                   value={searchCompanyText}
@@ -346,10 +157,11 @@ const Alerts = () => {
                 <p className="mb-0 text-center">Company</p>
               </div>
               <div className="sub2-div2 overflow-auto">
+                
                 {data.map((item, index)=>{
                   return (
                     <div key={index} id="import-alerts">
-                      <p id="sub1-import-alerts">{item.id}</p>
+                      <p id="sub1-import-alerts">{index+1}</p>
                       <div className="subsub1-sub2-alerts-div2">
                         <p className="item">{item.plate}</p>
                         <p className="item">{item.alert}</p>

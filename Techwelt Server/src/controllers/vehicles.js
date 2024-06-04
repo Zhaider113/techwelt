@@ -1,4 +1,4 @@
-const { vehicleSchema, teltonikaSchema, userSchema, ruptelaSchema } = require("../models");
+const { vehicleSchema, teltonikaSchema, userSchema, ruptelaSchema, alertSchema } = require("../models");
 
 const net = require('net');
 const crypto = require('crypto');
@@ -82,7 +82,13 @@ module.exports = () => {
             mobileNo: mobileNo,
             addClient: addClient,
           });
-          await vehicle.save();
+          let newVehicle = await vehicle.save();
+          let alert = new alertSchema({
+            userId: userId, 
+            vehicle: newVehicle._id,
+            alert: "Vehicle added successfully"
+          });
+          await alert.save();
           res.status(200).send({ message: "Vehicle added successfully" })
         }
       }

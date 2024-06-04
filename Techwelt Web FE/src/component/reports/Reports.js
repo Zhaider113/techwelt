@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { CSVLink } from "react-csv";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileContract } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Reports.css";
 
@@ -66,6 +67,7 @@ const ReportTypes = [
 ];
 
 const Reports = () => {
+  const devices = useSelector((state) => state.devicesList.devices);
   const dropdownRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -78,12 +80,12 @@ const Reports = () => {
   const [searchDeviceText, setSearchDeviceText] = useState("Device Type");
   const [searchModelText, setSearchModelText] = useState("Device Model");
   const [searchCompanyText, setSearchCompanyText] = useState("Company");
-  const [data, setData] = useState(ReportData);
+  const [data, setData] = useState(devices);
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
   const [searchFold, setSearchFold] = useState(true);
 
   useEffect(() => {
-    setChecks(ReportData)
+    setChecks(devices)
     const onClick = (e) => {
       if (e.target !== dropdownRef.current) {
         setIsDropdownDisplayed(false)
@@ -97,11 +99,11 @@ const Reports = () => {
 
   useEffect(() => {
     setData(
-      ReportData.filter((item) => {
-        return (!searchPlateText || item.plate.toLocaleLowerCase().includes(searchPlateText.toLocaleLowerCase())) 
-          && (searchDeviceText === "Device Type" ? item.device : (!searchDeviceText || item.device === searchDeviceText)) 
-          && (searchModelText === "Device Model" ? item.model : (!searchModelText || item.model === searchModelText)) 
-          && (searchCompanyText === "Company" ? item.company : (!searchCompanyText || item.company === searchCompanyText));
+      devices.filter((item) => {
+        return (!searchPlateText || item.vehicle.vehicleName.toLocaleLowerCase().includes(searchPlateText.toLocaleLowerCase())) 
+          && (searchDeviceText === "Device Type" ? item.vehicle.deviceType : (!searchDeviceText || item.vehicle.deviceType === searchDeviceText)) 
+          && (searchModelText === "Device Model" ? item.vehicle.deviceModel : (!searchModelText || item.vehicle.deviceModel === searchModelText)) 
+          // && (searchCompanyText === "Company" ? item.vehicle.company : (!searchCompanyText || item.vehicle.company === searchCompanyText));
       })
     )
   }, [searchPlateText, searchDeviceText, searchModelText, searchCompanyText]);
@@ -131,7 +133,7 @@ const Reports = () => {
     setSearchDeviceText("Device Type")
     setSearchModelText("Device Model")
     setSearchCompanyText("Company")
-    setData(ReportData);
+    setData(devices);
     setStartDate("");
     setEndDate("")
   };
@@ -168,7 +170,7 @@ const Reports = () => {
                 <img className="down-arrow" src="./assets/whiteDown.svg" alt="none" />
               </div>
               <CSVLink
-                data={ReportData}
+                data={devices}
                 filename="Reports"
                 style={{ textDecoration: "none" }}
               >
@@ -302,15 +304,15 @@ const Reports = () => {
                         <div className="item">
                           <input
                             type="checkbox"
-                            name={item.plate}
+                            name={item.vehicleName}
                             onChange={handleChange}
                             checked={item?.isChecked || false}
                           />
                         </div>
-                        <p className="item">{item?.plate}</p>
-                        <p className="item">{item?.device}</p>
-                        <p className="item">{item?.model}</p>
-                        <p className="item">{item?.imei}</p>
+                        <p className="item">{item?.vehicle.vehicleName}</p>
+                        <p className="item">{item?.vehicle.deviceType}</p>
+                        <p className="item">{item?.vehicle.deviceModel}</p>
+                        <p className="item">{item?.vehicle.deviceImei}</p>
                         <p className="item">{"delta"}</p>
                       </div>
                     </div>
@@ -351,7 +353,7 @@ const Reports = () => {
                 <img className="down-arrow" src="./assets/whiteDown.svg" alt="none" />
               </div>
               <CSVLink
-                data={ReportData}
+                data={devices}
                 filename="Reports"
                 style={{ textDecoration: "none" }}
               >

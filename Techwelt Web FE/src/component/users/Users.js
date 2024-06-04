@@ -33,7 +33,8 @@ const Users = () => {
   const [searchRoleText, setSearchRoleText] = useState("");
   const [searchFold, setSearchFold] = useState(true);
 
-  const { token } = deviceListData;
+  // const token  = localStorage.getItem('token');
+  const {token}  = deviceListData
 
   useEffect(() => {
     if (user?.role?.toUpperCase() !== "ADMIN" || !isAuthenticated) {
@@ -204,8 +205,9 @@ const Users = () => {
               Total users <span className="ml-3">{data?.length}</span>
             </p>
             <div className="d-flex">
+              
               <CSVLink
-                data={data}
+                data={data?data:null}
                 filename="Users"
                 style={{ textDecoration: "none" }}
               >

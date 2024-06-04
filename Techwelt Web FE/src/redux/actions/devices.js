@@ -1,5 +1,5 @@
 import { getResponse, signInUser } from "../../services/axios";
-import { GET_DEVICES, DEVICES_ERROR, GET_USERTOKEN, GET_TOKENERROR, LOG_OUT } from "../store/types";
+import { GET_DEVICES, DEVICES_ERROR, GET_ALERTS, ALERTS_ERROR,  GET_USERTOKEN, GET_TOKENERROR, LOG_OUT } from "../store/types";
 
 export const getDevices = (props) => async (dispatch) => {
   try {
@@ -22,6 +22,30 @@ export const getDevices = (props) => async (dispatch) => {
     });
   }
 };
+
+export const getAlerts = (props) => async (dispatch) => {
+  try {
+    var response = await getResponse('/api/alerts/list', 'post', props);
+    console.log(response,'response')
+    if (response.status === 401) {
+      dispatch({
+        type: LOG_OUT
+      })
+    }
+    if (response.status === 200) {
+      dispatch({
+        type: GET_ALERTS,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ALERTS_ERROR,
+      payload: error,
+    });
+  }
+};
+
 
 export const getToken = (props) => async (dispatch) => {
   try {

@@ -228,9 +228,9 @@ padding-left: 1rem;
 
 
 .rasta-stripes{
-  width: 50rem;
+  width: 38rem;
   height: auto;
-padding-left: 2rem;
+/* padding-left: 2rem; */
 font-size: 2rem;
 border: 1rem solid grey;
 }

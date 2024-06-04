@@ -115,9 +115,11 @@ const AddDevice = () => {
 
   const handleSubmit = () => {
     if (formData.vehicletype.length === 0) {
+      alert("Vehicle Type Required..!")
       return;
     }
     else if (formData.plate.length === 0) {
+      alert("Plate No Required...!")
       return;
     }
     else if (formData.imei.length !== 15) {
@@ -125,15 +127,19 @@ const AddDevice = () => {
       return;
     }
     else if (phoneNumber.length === 0) {
+      alert("Phone No Required...!")
       return;
     }
     else if (formData.devicetype.length === 0) {
+      alert("Device type Required...!")
       return;
     }
     else if (formData.model.length === 0) {
+      alert("Device model Required...!")
       return;
     }
     else if (formData.user.length === 0) {
+      alert("Choose User Required...!")
       return;
     }
     final()
@@ -155,6 +161,9 @@ const AddDevice = () => {
     if (res?.status == 200) {
       alert("New device added successfully!")
       navigate("/Devices")
+    }else{
+      console.log(res)
+      alert(res.data.message)
     }
   }
 

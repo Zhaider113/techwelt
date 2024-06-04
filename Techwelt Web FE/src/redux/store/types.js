@@ -4,7 +4,9 @@ export const USER_ERROR = "USER_ERROR";
 
 export const GET_DEVICES = "GET_DEVICES";
 export const GET_USERNAMELIST = "GET_USERNAMELIST";
+export const GET_ALERTS = "GET_ALERTS";
 export const DEVICES_ERROR = "DEVICES_ERROR";
+export const ALERTS_ERROR = "ALERTS_ERROR";
 export const GET_USERTOKEN = "GET_USERTOKEN";
 export const GET_TOKENERROR = "GET_USERTOKEN";
 export const GET_USERS = "GET_USERS";
