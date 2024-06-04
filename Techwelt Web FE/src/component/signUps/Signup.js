@@ -206,7 +206,7 @@ const Signup = () => {
                 />
               </div>
               <button className='py-1' onClick={() => { setFade(true); signUp() }}>
-                {!fade ? 'SignUp' : <img src='./assets/loading.gif' class="imgloading" alt='none' />}
+                {fade ? 'SignUp' : <img src='./assets/loading.gif' class="imgloading" alt='none' />}
               </button>
               <span className='have-account'>Already have account! <p style={{ textDecoration: "underLine", fontSize: "2rem", display: "inline" }} onClick={() => { navigate("/") }}>Login</p></span>
             </div>
