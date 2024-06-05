@@ -305,6 +305,19 @@ const AddDevice = () => {
             <div className={`d-flex align-items-end ${isMobile && 'w-100'}`}>
               <div className="d-flex flex-column col-8 px-0">
                 <div className="add-input-container d-flex flex-column mb-4">
+                  <label>Device IMEI</label>
+                  <input 
+                    className="normal-input" 
+                    value={formData.imei} 
+                    name="imei" 
+                    type="number" 
+                    onChange={handleData} onInput={(e) => {
+                      const value = e.target.value.slice(0, 15);
+                      e.target.value = value.replace(/\D/, '');
+                    }} 
+                  />
+                </div>
+                <div className="add-input-container d-flex flex-column mb-4">
                   <label>Device Type</label>
                   <select className="normal-input" value={formData.devicetype} name="devicetype" type="text" onChange={(e) => {
                     handleType(e);
@@ -332,6 +345,18 @@ const AddDevice = () => {
                     )}
                   />
                 </div>
+                <div className="add-input-container d-flex flex-column mb-4">
+                    <label>Mobile No.</label>
+                    <div className='ma'>
+                      <PhoneInput
+                        className="phoneInput"
+                        placeholder="Enter phone number"
+                        value={phoneNumber}
+                        international
+                        onChange={handleNumber}
+                      />
+                    </div>
+                  </div>
               </div>
               <img className="ml-4 mb-3 mobile-image col-4" src={path} alt="none" />
             </div>

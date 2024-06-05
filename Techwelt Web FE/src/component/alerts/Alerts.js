@@ -13,7 +13,7 @@ const Alerts = () => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const AlertData = useSelector((state) => state.alertsList.alerts);
-  console.log(AlertData,'alerts')
+  
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [searchPlateText, setSearchPlateText] = useState("");
@@ -25,6 +25,7 @@ const Alerts = () => {
 
   useEffect(() => {
     dispatch(getAlerts())
+    setData(AlertData)
   }, [searchPlateText,searchAlertText,searchCompanyText]);
 
   const handlePlate = (event) => {
@@ -62,7 +63,7 @@ const Alerts = () => {
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="sub1-div1 d-flex justify-content-between align-items-center w-100">
             <p className="px-5 text-white d-flex justify-content-center align-items-center">
-              Total alerts <span className="ml-3">{data?.length}</span>
+              Total alerts <span className="ml-3">{AlertData?.length}</span>
             </p>
             <div className="d-flex">
               <CSVLink
@@ -158,7 +159,9 @@ const Alerts = () => {
               </div>
               <div className="sub2-div2 overflow-auto">
                 
+                
                 {data.map((item, index)=>{
+                  
                   return (
                     <div key={index} id="import-alerts">
                       <p id="sub1-import-alerts">{index+1}</p>

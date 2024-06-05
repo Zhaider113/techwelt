@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
 	limitHighTemp: {type:Number, default: 20},
 	onStop: {type:Number, default: 0},
 	onMove: {type:Number, default: 1},
-
+	rules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Rules" }],
 }, { timestamps: true })
 
 module.exports = mongoose.model("vehicles", schema)

@@ -186,7 +186,7 @@ const getResponse = async (url, type, props) => {
     try {
         let result;
         if (type === "post") {
-            console.log(axios.defaults.baseURL)
+            console.log(axios.defaults.baseURL,url)
             result = await axios.post(url, props, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,5 +208,18 @@ const getResponse = async (url, type, props) => {
         return error.response
     }
 }
+const postRules = async (props) => {
+    try {
+        var result = await axios.post("/api/rules/create", props, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem('token')
+            },
+        });
+        return result;
+    } catch (error) {
+        return error.response
+    }
+}
 
-export { getGoogleAPIKey, userRegister, getResFromDev, showComandQueue, getUserNameList, activateUser, getHistoryList, commandSetting, updateDevice, signInUser, forgotPass, removeDevice, resetUser, getUser, getResponse };
+export { getGoogleAPIKey, userRegister, getResFromDev, showComandQueue, getUserNameList, activateUser, getHistoryList, commandSetting, updateDevice, signInUser, forgotPass, removeDevice, resetUser, getUser, getResponse, postRules };

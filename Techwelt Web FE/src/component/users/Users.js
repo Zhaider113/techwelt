@@ -173,7 +173,7 @@ const Users = () => {
 
   const handleDialogBoxUserState = async (data, email) => {
     const sendData = {
-      token: token,
+      // token: token,
       email: email,
       activate: "Activate" === data ? true : false
     }
