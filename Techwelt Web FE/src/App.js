@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="app d-flex">
       <BrowserRouter>
-        <SideBar />
+        {/* <SideBar /> */}
         <div className="d-flex flex-column w-100 right-layout">
           <Header />
           <Routes />

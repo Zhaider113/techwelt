@@ -9,10 +9,8 @@ module.exports = (router) => {
     removeRule
   } = Rules()
 
-  const { sendCmd, showCmd } = cmds()
-
-  router.post("/create", createRule)//add Rules
-  router.post("/show", showRulesList)    //get Rules list normal
+  router.post("/add", createRule)//add Rules
+  router.post("/ruleList", showRulesList)    //get Rules list normal
   router.post("/update", updateRule)    //update rules
   router.post("/remove", removeRule) //remove rules
   

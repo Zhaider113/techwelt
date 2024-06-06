@@ -132,6 +132,11 @@ const AddVehicle = () => {
     }
   }
 
+  const handleSubmit = async () => {
+      alert("New Rule added successfully!");
+      navigate("/Rules");
+  };
+
   return (
     <div className="addvehicle-main">
       {!isMobile ? (
@@ -148,7 +153,7 @@ const AddVehicle = () => {
             <div className="d-flex">
               <div className="tab-button d-flex justify-content-evenly align-items-center mx-1">
                 <img src="./assets/Save.svg" alt="none" />
-                <button>Save</button>
+                <button onClick={()=>handleSubmit()}>Save</button>
               </div>
             </div>
           </div>
@@ -284,7 +289,7 @@ const AddVehicle = () => {
             <div className="d-flex">
               <div className="tab-button d-flex justify-content-evenly align-items-center mx-1">
                 <img src="./assets/Save.svg" alt="none" />
-                <button>Save</button>
+                <button onClick={()=>handleSubmit()}>Save</button>
               </div>
             </div>
           </div>

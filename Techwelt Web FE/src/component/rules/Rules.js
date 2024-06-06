@@ -2,63 +2,66 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useDispatch, useSelector } from "react-redux";
+import {getRules} from '../../redux/actions/devices.js';
 import { Ruptelas, Teltonikas } from "../../utils/mockup";
 
 import "./Rules.css";
 import { faFileCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
-const RuleData = [
-  {
-    id: "1",
-    rule: "Enter Geofence Zone1",
-    device: "Teltonika",
-    model: "FMC001",
-    pin: "DIN4",
-    vehicle: "26",
-    status: "Active",
-  },
-  {
-    id: "2",
-    rule: "Leaving Geofence",
-    device: "Teltonika",
-    model: "FMC001",
-    pin: "DOUT1",
-    vehicle: "26",
-    status: "Active",
-  },
-  {
-    id: "3",
-    rule: "Ignition ON",
-    device: "Teltonika",
-    model: "FMC001",
-    vehicle: "26",
-    pin: "Device Accelerometer",
-    status: "Active",
-  },
-  {
-    id: "4",
-    rule: "Ignition Enabled",
-    device: "Teltonika",
-    model: "FMC001",
-    pin: "DIN4",
-    vehicle: "26",
-    status: "Deactivated",
-  },
-  {
-    id: "5",
-    rule: "OverSpeed 121Km/Hr",
-    device: "Ruptela",
-    model: "FMC001",
-    pin: "DIN4",
-    vehicle: "26",
-    status: "Deactivated",
-  },
-];
+// const RuleData = [
+//   {
+//     id: "1",
+//     rule: "Enter Geofence Zone1",
+//     device: "Teltonika",
+//     model: "FMC001",
+//     pin: "DIN4",
+//     vehicle: "26",
+//     status: "Active",
+//   },
+//   {
+//     id: "2",
+//     rule: "Leaving Geofence",
+//     device: "Teltonika",
+//     model: "FMC001",
+//     pin: "DOUT1",
+//     vehicle: "26",
+//     status: "Active",
+//   },
+//   {
+//     id: "3",
+//     rule: "Ignition ON",
+//     device: "Teltonika",
+//     model: "FMC001",
+//     vehicle: "26",
+//     pin: "Device Accelerometer",
+//     status: "Active",
+//   },
+//   {
+//     id: "4",
+//     rule: "Ignition Enabled",
+//     device: "Teltonika",
+//     model: "FMC001",
+//     pin: "DIN4",
+//     vehicle: "26",
+//     status: "Deactivated",
+//   },
+//   {
+//     id: "5",
+//     rule: "OverSpeed 121Km/Hr",
+//     device: "Ruptela",
+//     model: "FMC001",
+//     pin: "DIN4",
+//     vehicle: "26",
+//     status: "Deactivated",
+//   },
+// ];
 
 const Rules = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const RuleData = useSelector((state) => state.rulesList.rules);
 
   const [ruleStatus, setRuleStatus] = useState("");
   const [stateColor, setStateColor] = useState("#7A7D8B");
@@ -72,16 +75,9 @@ const Rules = () => {
   const [searchFold, setSearchFold] = useState(true);
 
   useEffect(() => {
-    setData(
-      RuleData.filter((item) => {
-        return (
-          (searchRuleText === "Rule" ? item.rule : !searchRuleText || item.rule === searchRuleText) &&
-          (searchDeviceText === "Device" ? item.device : !searchDeviceText || item.device === searchDeviceText) &&
-          (searchStatusText === "Status" ? item.status : !searchStatusText || item.status === searchStatusText) &&
-          (searchModelText === "Model" ? item.device : !searchModelText || item.device === searchModelText)
-        );
-      })
-    );
+    dispatch(getRules())
+
+    setData(RuleData);
   }, [searchRuleText, searchDeviceText, searchStatusText, searchModelText]);
 
   const handleRule = (event) => {
@@ -146,7 +142,7 @@ const Rules = () => {
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="sub1-div1 d-flex justify-content-between align-items-center w-100">
             <p className="px-5 text-white d-flex justify-content-center align-items-center">
-              Total rules <span className="ml-3">{data?.length}</span>
+              Total rules <span className="ml-3">{RuleData?.length}</span>
             </p>
             <div className="d-flex">
               <div

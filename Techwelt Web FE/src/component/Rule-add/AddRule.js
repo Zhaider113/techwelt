@@ -85,14 +85,14 @@ const handleNotification = (event) => {
   }
 
   const handleSubmit = async () => {
-    // var res = await postRules(formData);
-    // if (res?.status == 200) {
+    var res = await postRules(formData);
+    if (res?.status == 200) {
       alert("New Rule added successfully!")
       navigate("/Rules")
-    // }else{
-    //   console.log(res)
-    //   alert(res.data.message)
-    // }
+    }else{
+      console.log(res)
+      alert(res.data.message)
+    }
   };
 
   return (

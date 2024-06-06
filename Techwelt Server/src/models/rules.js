@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     required: true,
   },
   alertNotification: {
-    type: String,
+    type: Array,
     required: false,
   },
 }, { timestamps: true });

@@ -210,7 +210,7 @@ const getResponse = async (url, type, props) => {
 }
 const postRules = async (props) => {
     try {
-        var result = await axios.post("/api/rules/create", props, {
+        var result = await axios.post("/api/rules/add", props, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-access-token': localStorage.getItem('token')
