@@ -277,7 +277,7 @@ const Rules = () => {
                                 />
                                 <p className="mb-0 ml-2">Add Vehicle</p>
                               </div>
-                              <div
+                              {/* <div
                                 className="d-flex align-items-center cursor-pointer"
                                 onClick={() => navigate("/EditRule")}
                               >
@@ -286,7 +286,7 @@ const Rules = () => {
                                   alt="none"
                                 />
                                 <p className="mb-0 ml-2">Edit</p>
-                              </div>
+                              </div> */}
                               <div
                                 className="d-flex align-items-center cursor-pointer"
                                 onClick={() => handleRemoveRule(item.id)}
