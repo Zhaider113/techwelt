@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-
+import Webcam from "react-webcam";
 import { commandSetting } from "../../services/axios";
 import { SWITCH_MENU_VISIBLE, SWITCH_SIDEBAR_VISIBLE } from "../../redux/store/types";
 import { getDevices } from "../../redux/actions/devices";
@@ -60,6 +60,7 @@ const SideBar = (props) => {
 
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [simState, setSimState] = useState(false)
+  const [cameraBtn, setCameraBtn] = useState(false)
   const [boardColor, setBoardColor] = useState(".1rem solid rgb(158, 154, 154, 50%)");
   const [uploadImg, setUploadImg] = useState("./assets/Pic11.svg");
   const [uploadText, setUploadText] = useState("Upload Config");
@@ -251,6 +252,11 @@ const SideBar = (props) => {
     dispatch({type: SWITCH_SIDEBAR_VISIBLE, payload: !showSidebar});
     dispatch({type: SWITCH_MENU_VISIBLE, payload: false});
   }
+  const showCamera = ()=>{
+    console.log("Show camera")
+    // setCameraBtn(true)
+  }
+  // setCameraBtn(true)
 
   if (!isAuthenticated) {
     return <></>
@@ -450,7 +456,7 @@ const SideBar = (props) => {
                           </div>
                           <div className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center">
                             <img src="./assets/Pic7.svg" alt="none" />
-                            <p className="mt-5 mb-0 text-white">Camera</p>
+                            <p className="mt-5 mb-0 text-white" onClick={()=>{showCamera()}}>Camera</p>
                             {/* <img className="mt-5 mb-0" style={{width: "1.5rem", height: "1.5rem"}} src="./assets/Group.svg" alt="none" /> */}
                           </div>
                         </div>
@@ -600,6 +606,7 @@ const SideBar = (props) => {
             })}
           </div>
           {selectedVeh && (
+            
             <div ref={modalRef} className="main-car-portal-side-bar position-absolute">
               <div className="position-relative">
                 <img
@@ -761,6 +768,7 @@ const SideBar = (props) => {
                 </div> : ''
               </div>
             </div>
+            
           )}
           {/* <div className="main-car-portal-side-bar">
             <div className="upload-config-class">

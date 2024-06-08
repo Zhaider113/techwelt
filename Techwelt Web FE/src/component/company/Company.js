@@ -4,6 +4,8 @@ import { CSVLink } from "react-csv";
 import { useMediaQuery } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from "react-redux";
+import {getCompany} from '../../redux/actions/devices.js';
 
 import CountryData from "../../CountryData.json"
 
@@ -11,68 +13,70 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
 import "./Company.css";
 
-const CompanyData = [
-  {
-    id: "1",
-    img: "./assets/uber.svg",
-    companyName: "Uber",
-    username:"abc",
-    owner: "Daniel",
-    email: "test@gmail.com1",
-    mobile: "+97 6730753792",
-    noVehicle: "24",
-    country_name: "Pakistan",
-    status: "Deactivated",
-    address:"abc"
-  },
-  {
-    id: "2",
-    img: "./assets/uber.svg",
-    companyName: "Uber",
-    username:"abc",
-    owner: "Daniel",
-    email: "test@gmail.com1",
-    mobile: "+97 6730753792",
-    noVehicle: "24",
-    country_name: "Pakistan",
-    status: "Active",
-    address:"abc"
+// const CompanyData = [
+//   {
+//     id: "1",
+//     img: "./assets/uber.svg",
+//     companyName: "Uber",
+//     username:"abc",
+//     owner: "Daniel",
+//     email: "test@gmail.com1",
+//     mobile: "+97 6730753792",
+//     noVehicle: "24",
+//     country_name: "Pakistan",
+//     status: "Deactivated",
+//     address:"abc"
+//   },
+//   {
+//     id: "2",
+//     img: "./assets/uber.svg",
+//     companyName: "Uber",
+//     username:"abc",
+//     owner: "Daniel",
+//     email: "test@gmail.com1",
+//     mobile: "+97 6730753792",
+//     noVehicle: "24",
+//     country_name: "Pakistan",
+//     status: "Active",
+//     address:"abc"
 
-  },
-  {
-    id: "3",
-    img: "./assets/uber.svg",
-    companyName: "Uber",
-    username:"abc",
-    owner: "Daniel",
-    email: "test@gmail.com",
-    mobile: "+97 6730753792",
-    noVehicle: "23",
-    country_name: "Pakistan",
-    status: "Active",
-    address:"abc"
+//   },
+//   {
+//     id: "3",
+//     img: "./assets/uber.svg",
+//     companyName: "Uber",
+//     username:"abc",
+//     owner: "Daniel",
+//     email: "test@gmail.com",
+//     mobile: "+97 6730753792",
+//     noVehicle: "23",
+//     country_name: "Pakistan",
+//     status: "Active",
+//     address:"abc"
 
-  },
-  {
-    id: "4",
-    img: "./assets/uber.svg",
-    companyName: "Uber",
-    username:"abc",
-    owner: "Daniel",
-    email: "test@gmail.com",
-    mobile: "+97 6730753792",
-    noVehicle: "23",
-    country_name: "India",
-    status: "Deactivated",
-    address:"abc"
+//   },
+//   {
+//     id: "4",
+//     img: "./assets/uber.svg",
+//     companyName: "Uber",
+//     username:"abc",
+//     owner: "Daniel",
+//     email: "test@gmail.com",
+//     mobile: "+97 6730753792",
+//     noVehicle: "23",
+//     country_name: "India",
+//     status: "Deactivated",
+//     address:"abc"
 
-  },
+//   },
 
-];
+// ];
 
 const Company = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const CompanyData = useSelector((state) => state.companyList.companies);
 
   const [companyStatus, setCompanyStatus] = useState("");
   const [stateColor, setStateColor] = useState("#7A7D8B");
@@ -83,19 +87,13 @@ const Company = () => {
   const [searchStatusText, setSearchStatusText] = useState("");
   const [companyRemove, setCompanyRemove] = useState("none");
   const [companyRemoveId, setCompanyRemoveId] = useState("");
-  const [data, setData] = useState(CompanyData);
+  const [data, setData] = useState("");
   const [searchFold, setSearchFold] = useState(true);
 
   useEffect(() => {
-    setData(
-      CompanyData.filter((item)=>{
-        return (!searchCompanyNameText || item.companyName.toLocaleLowerCase().includes(searchCompanyNameText.toLocaleLowerCase())) 
-          && (!searchOwnerText || item.owner.toLocaleLowerCase().includes(searchOwnerText.toLocaleLowerCase())) 
-          && (!searchEmailText || item.email.toLocaleLowerCase().includes(searchEmailText.toLocaleLowerCase())) 
-          && (searchStatusText=="Status"?item.status : (!searchStatusText || item.status===searchStatusText)) 
-          && (searchCountryText=="Country"?item.country_name : (!searchCountryText || item.country_name===searchCountryText));
-      })
-    )
+    dispatch(getCompany());
+    setData(CompanyData)
+    // console.log(CompanyData);
   }, [searchCompanyNameText,searchOwnerText,searchEmailText,searchStatusText,searchCountryText])
 
   const handleStateColor = (event) => {
@@ -210,7 +208,7 @@ const Company = () => {
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="sub1-div1 d-flex justify-content-between align-items-center w-100">
             <p className="px-5 text-white d-flex justify-content-center align-items-center">
-              Total companies <span className='ml-3'>{data?.length}</span>
+              Total companies <span className='ml-3'>{CompanyData?.length}</span>
             </p>
             <div className="d-flex position-relative">
               <CSVLink
@@ -315,7 +313,7 @@ const Company = () => {
                 <p className='mb-0 text-center'></p>
               </div>
               <div className="sub2-div2 overflow-auto">
-                {data.map((item, index) => {
+                {CompanyData.map((item, index) => {
                   return (
                     <div key={index} id="import-company">
                       <p id="sub1-import-company">{item.id}</p>
@@ -385,7 +383,7 @@ const Company = () => {
                                 />
                                 <p className='mb-0 ml-2'>Edit</p>
                               </div>
-                              <div
+                              {/* <div
                                 className="d-flex align-items-center cursor-pointer"
                                 onClick={() => handleRemoveCompany(item.id)}
                               >
@@ -394,7 +392,7 @@ const Company = () => {
                                   alt="none"
                                 />
                                 <p className='mb-0 ml-2'>Remove</p>
-                              </div>
+                              </div> */}
                               <div
                                 className="d-flex align-items-center cursor-pointer"
                                 style={{

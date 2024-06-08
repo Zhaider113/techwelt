@@ -9,13 +9,14 @@ module.exports = () => {
   const commonRoutes = require("./common")(router)
   const alertRoutes = require("./alerts")(router)
   const rulesRoutes = require("./rules")(router)
+  const companyRoutes = require("./company")(router)
 
   router.use("/vehicles", vehiclesRoutes);
   router.use("/teltonika", teltonikaRoutes);
   router.use("/users", usersRoutes);
   router.use("/common", commonRoutes);
   router.use("/alerts", alertRoutes);
-  router.use("/rules", rulesRoutes);
+  router.use("/company", companyRoutes);
 
   return router;
 };

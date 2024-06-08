@@ -1,4 +1,4 @@
-const { vehicleSchema, ruleSchema, alertSchema, userSchema } = require("../models");
+const { vehicleSchema, companySchema, alertSchema, userSchema } = require("../models");
 require('dotenv').config();
 const mongoose = require("mongoose");
 
@@ -7,40 +7,36 @@ module.exports = () => {
 
     try {
       console.log(req.body)
-      const {
-        ruleName,
-        deviceBrand,
-        deviceModel,
-        ioPin,
-        ioStatus,
-        alertNotification } = req.body
+      const { name,username,email,phoneNo,country,address,logo } = req.body
+
       const userId = req.user.id
       try {
-        const rule = await ruleSchema.findOne({ rulename: ruleName })
+        const company = await companySchema.findOne({ username: username })
         const admin = await userSchema.findOne({ _id: userId })
         if (admin.role != "Admin" && admin.role != "Manager") {
           res.status(400).send({ message: "Access denied" })
           return;
         }
-        if (rule) {
-          res.status(400).send({ message: "Already same Rule exists!" });
+        if (company) {
+          res.status(400).send({ message: "Already same Company exists!" });
         } else {
-          let rule = new ruleSchema({
-            rulename: ruleName,
-            devicebrand: deviceBrand,
-            devicemodel: deviceModel,
-            ioPin: ioPin,
-            ioStatus: ioStatus,
-            alertNotification: alertNotification
+          let company = new companySchema({
+            name:name,
+            username:username,
+            email:email,
+            phoneNo:phoneNo,
+            country:country,
+            address:address,
+            logo:logo
           });
-          let newRule = await rule.save();
+          let newCompany = await company.save();
           let alert = new alertSchema({
             userId: userId, 
-            vehicle: newRule._id,
-            alert: "New Rule added successfully"
+            vehicle: newCompany._id,
+            alert: "New Company added successfully"
           });
           await alert.save();
-          res.status(200).send({ message: "Rule added successfully" })
+          res.status(200).send({ message: "Company added successfully" })
         }
       }
       catch (err) {
@@ -54,25 +50,31 @@ module.exports = () => {
 
   const showCompanyList = async (req, res) => {
     try {
-      const rules = await ruleSchema.find({
+      const companies = await companySchema.find({
         where: {id_deleted: 0}
       }); // Fetch all rules
 
-    const rulesWithVehicleCounts = await Promise.all(
-      rules.map(async (rule) => {
-        const vehicleCount = await vehicleSchema.countDocuments({ rules: { $in: [rule._id] } }); // Count vehicles with matching rule IDs
+    const companyData = await Promise.all(
+      companies.map(async (company) => {
+        const vehicleCount = await vehicleSchema.countDocuments({ company: { $in: [company._id] } }); // Count vehicles with matching rule IDs
+        // Fetch owner details using company ID
+        const owner = await userSchema.findOne({ company: company._id });
         return {
-          id: rule._id,
-          rule: rule.rulename,
-          device: rule.devicebrand,
-          model: rule.devicemodel,
-          pin: rule.ioPin,
-          vehicle: vehicleCount,
-          status: 'Deactive', // Assuming a "status" field in the Rule schema
+          id: company._id,
+          img: company.logo,
+          companyName: company.name,
+          username:company.username,
+          owner: owner?`${owner.fname} ${owner.lname}`:'N/A',
+          email: company.email,
+          mobile: company.phoneNo,
+          noVehicle: vehicleCount,
+          country_name: company.country,
+          status: "Deactivated",
+          address:company.address
         };
       })
     );
-    res.status(200).json(rulesWithVehicleCounts);
+    res.status(200).json(companyData);
 
 
     } catch (err) {
@@ -89,24 +91,19 @@ module.exports = () => {
         res.status(400).send({ message: "Access denied" })
         return;
       }
-      const {
-        ruleName,
-        deviceBrand,
-        deviceModel,
-        ioPin,
-        ioStatus,
-        alertNotification } = req.body
+      const {companyId, name,username,email,phoneNo,country,address,logo } = req.body
 
-      ruleSchema.updateOne(
-        { _id: id },
+      companySchema.updateOne(
+        { _id: companyId },
         {
           $set: {
-            ruleName:ruleName,
-            deviceBrand:deviceBrand,
-            deviceModel:deviceModel,
-            ioPin:ioPin,
-            ioStatus:ioStatus,
-            alertNotification: alertNotification
+            name: name,
+            username: username,
+            email: email,
+            phoneNo: phoneNo,
+            country: country,
+            address: address,
+            logo: logo
           }
         },
         (err, result) => {
@@ -114,7 +111,7 @@ module.exports = () => {
             res.status(401).json({ message: "Something went wrong" })
           }
           else {
-            res.status(200).json({ message: "Rule updated successfully", result })
+            res.status(200).json({ message: "Company updated successfully", result })
           }
         }
       )
@@ -163,9 +160,9 @@ module.exports = () => {
   // }
 
   const removeCompany = async (req, res) => {
-    const { ruleId } = req.body
+    const { companyId } = req.body
     const userId = req.user.id
-    if (!ruleId || ruleId == "") {
+    if (!companyId || companyId == "") {
       res.status(401).json({ message: "Something went wrong" });
       return;
     }
@@ -175,14 +172,14 @@ module.exports = () => {
         res.status(400).send({ message: "Access denied" })
         return;
       }
-      const rule = await ruleSchema.findOne({ _id: ruleId })
+      const company = await companySchema.findOne({ _id: companyId })
 
-      if (!rule) {
-        res.status(200).json({ message: "Rule not exist" })
+      if (!company) {
+        res.status(200).json({ message: "Compnay not exist" })
       }
       else {
-        await rule.deleteOne()
-        res.status(200).json({ message: "Rule deleted successfully" })
+        await company.deleteOne()
+        res.status(200).json({ message: "Company deleted successfully" })
       }
     } catch (err) {
       console.log(err)

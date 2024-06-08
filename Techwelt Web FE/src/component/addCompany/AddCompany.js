@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
-
+import { postCompany } from "../../services/axios";
+import axios from 'axios';
 import { CountryData } from "../../utils/mockup";
-
+import { useNavigate } from "react-router-dom";
 import 'react-phone-number-input/style.css';
 import "./AddCompany.css";
 
 const AddCompany = () => {
+    const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [avatarPath, setAvatarPath] = useState('');
     const [formData, setFormData] = useState({
         name: "",
         username: "",
@@ -24,7 +27,19 @@ const AddCompany = () => {
     const handleNumber = (value) => {
         setPhoneNumber(value)
     }
-
+    const onChange = async (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile && selectedFile.type.startsWith('image/')) {
+            let formDataFile = new FormData();
+            formDataFile.append('avatar', selectedFile);
+            var result = await axios.post('/api/common/uploadAvatar', formDataFile, {
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                },
+            });
+            setAvatarPath(result.data.filePath);
+        }
+    }
     const handlSubmit = () => {
         if (formData.name.length === 0) {
         }
@@ -41,14 +56,23 @@ const AddCompany = () => {
         final()
     }
 
-    const final = () => {
+    const final = async () => {
         const sendData = {
             name: formData.name,
             username: formData.username,
             email: formData.email,
-            mobile: phoneNumber,
-            country_name: formData.country_name,
+            phoneNo: phoneNumber,
+            country: formData.country_name,
             address: formData.address,
+            logo: avatarPath
+        }
+        var res = await postCompany(sendData);
+        if (res?.status == 200) {
+          alert("New Company added successfully!")
+          navigate("/Compnay")
+        }else{
+          console.log(res)
+          alert(res.data.message)
         }
     }
 
@@ -57,8 +81,8 @@ const AddCompany = () => {
             <p>Add Company</p>
             <div className='add-company-div1 d-flex justify-content-center flex-column p-5 mx-5'>
                 <div className='person-add-company-sub1-add-company-div1 d-flex justify-content-center position-relative'>
-                    <input type='file' className='personfile position-absolute' />
-                    <img src='./assets/uber.svg' alt='none' className='person-add-company' />
+                    <input type='file' className='personfile position-absolute' accept='image/*' onChange={onChange} />
+                    <img crossOrigin='*' src={avatarPath ? process.env.REACT_APP_URL + '/' + avatarPath : './assets/uber.svg'} alt='none' className='person-add-user object-fit-cover' />
                 </div >
                 <div className='add-input-container d-flex justify-content-evenly mb-5'>
                     <div className='d-flex flex-column'>

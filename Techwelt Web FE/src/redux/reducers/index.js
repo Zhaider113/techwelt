@@ -4,6 +4,7 @@ import atertReducer from "./alertReducer";
 import authReducer from "./authReducer";
 import globalReducer from "./globalReducer";
 import ruleReducer from "./ruleReducer";
+import companyReducer from "./companyReducer";
 
 export default combineReducers({
     devicesList: deviceReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     auth: authReducer,
     global: globalReducer,
     rulesList: ruleReducer,
+    companyList: companyReducer,
 });
