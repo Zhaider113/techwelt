@@ -65,6 +65,7 @@ module.exports = () => {
         const vehicle = await vehicleSchema.findOne({ deviceImei: deviceImei })
         const admin = await userSchema.findOne({ _id: userId })
         if (admin.role != "Admin" && admin.role != "Manager") {
+          console.log(admin.role, "create vehicle")
           res.status(400).send({ message: "Access denied" })
           return;
         }
