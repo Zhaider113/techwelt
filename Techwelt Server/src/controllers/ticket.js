@@ -41,14 +41,19 @@ module.exports = () => {
 
     const ticketData = await Promise.all(
       tickets.map(async (ticket) => {
+        console.log(ticket.company)
         const user = await userSchema.findOne(ticket.user);
-        const company = await companySchema.findOne(ticket.company);
+        const company = 'N/A';
+        if(ticket.company){
+          company = await companySchema.findOne(ticket.company);
+        }
         return {
           id: ticket._id,
           subject: ticket.subject,
           text: ticket.text,
-          user: user.fname,
-          company: company.name,
+          user: user?user.fname:'N/A',
+          company: company?company.name:'N/A',
+          date: ticket.createdAt,
           status: ticket.status?'Resolved':'Pending', // Assuming a "status" field in the Rule schema
         };
       })

@@ -1,5 +1,5 @@
 import { getResponse, signInUser } from "../../services/axios";
-import { GET_DEVICES, DEVICES_ERROR, GET_ALERTS, ALERTS_ERROR, GET_RULES, RULES_ERROR, GET_COMPANY, COMPANY_ERROR,  GET_USERTOKEN, GET_TOKENERROR, LOG_OUT } from "../store/types";
+import { GET_DEVICES, DEVICES_ERROR, GET_ALERTS, ALERTS_ERROR, GET_RULES, RULES_ERROR, GET_COMPANY, COMPANY_ERROR,  GET_USERTOKEN, GET_TOKENERROR, LOG_OUT, GET_TICKET, TICKET_ERROR } from "../store/types";
 
 export const getDevices = (props) => async (dispatch) => {
   try {
@@ -87,6 +87,29 @@ export const getCompany = (props) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: COMPANY_ERROR,
+      payload: error,
+    });
+  }
+};
+
+export const getTicket = (props) => async (dispatch) => {
+  try {
+    var response = await getResponse('/api/ticket/ticketList', 'post', props);
+    console.log(response,'response')
+    if (response.status === 401) {
+      dispatch({
+        type: LOG_OUT
+      })
+    }
+    if (response.status === 200) {
+      dispatch({
+        type: GET_TICKET,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: TICKET_ERROR,
       payload: error,
     });
   }

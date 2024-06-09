@@ -3,130 +3,131 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import DatePicker from "react-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useDispatch, useSelector } from "react-redux";
+import {getTicket} from '../../redux/actions/devices.js';
 import "react-datepicker/dist/react-datepicker.css";
 import "./Ticket.css";
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-const ticketsData = [
-  {
-    id: "1",
-    reference: "24235843981",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Ayaz",
-    company: "delta",
-    status:"Resolved"
-  },
-  {
-    id: "2",
-    reference: "24235843982",
-    subject:"Teltonikas",
-    date: "14/04/2023 12.56 PM ",
-    user:"Alex",
-    company: "deltas",
-    status:"Pending"
-  },
-  {
-    id: "3",
-    reference: "24235843983",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Andrei",
-    company: "deltass",
-    status:"Resolved"
-  },
-  {
-    id: "1",
-    reference: "24235843981",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Ayaz",
-    company: "delta",
-    status:"Resolved"
-  },
-  {
-    id: "2",
-    reference: "24235843982",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Alex",
-    company: "deltas",
-    status:"Pending"
-  },
-  {
-    id: "3",
-    reference: "24235843983",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Andrei",
-    company: "deltass",
-    status:"Resolved"
-  },
-  {
-    id: "1",
-    reference: "24235843981",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Ayaz",
-    company: "delta",
-    status:"Resolved"
-  },
-  {
-    id: "2",
-    reference: "24235843982",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Alex",
-    company: "deltas",
-    status:"Pending"
-  },
-  {
-    id: "3",
-    reference: "24235843983",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Andrei",
-    company: "deltass",
-    status:"Resolved"
-  },
-  {
-    id: "1",
-    reference: "24235843981",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Ayaz",
-    company: "delta",
-    status:"Resolved"
-  },
-  {
-    id: "2",
-    reference: "24235843982",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Alex",
-    company: "deltas",
-    status:"Pending"
-  },
-  {
-    id: "3",
-    reference: "24235843983",
-    subject:"Teltonika",
-    date: "14/04/2023 12.56 PM ",
-    user:"Andrei",
-    company: "deltass",
-    status:"Resolved"
-  },
-];
+// const ticketsData = [
+//   {
+//     id: "1",
+//     reference: "24235843981",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Ayaz",
+//     company: "delta",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "2",
+//     reference: "24235843982",
+//     subject:"Teltonikas",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Alex",
+//     company: "deltas",
+//     status:"Pending"
+//   },
+//   {
+//     id: "3",
+//     reference: "24235843983",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Andrei",
+//     company: "deltass",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "1",
+//     reference: "24235843981",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Ayaz",
+//     company: "delta",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "2",
+//     reference: "24235843982",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Alex",
+//     company: "deltas",
+//     status:"Pending"
+//   },
+//   {
+//     id: "3",
+//     reference: "24235843983",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Andrei",
+//     company: "deltass",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "1",
+//     reference: "24235843981",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Ayaz",
+//     company: "delta",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "2",
+//     reference: "24235843982",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Alex",
+//     company: "deltas",
+//     status:"Pending"
+//   },
+//   {
+//     id: "3",
+//     reference: "24235843983",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Andrei",
+//     company: "deltass",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "1",
+//     reference: "24235843981",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Ayaz",
+//     company: "delta",
+//     status:"Resolved"
+//   },
+//   {
+//     id: "2",
+//     reference: "24235843982",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Alex",
+//     company: "deltas",
+//     status:"Pending"
+//   },
+//   {
+//     id: "3",
+//     reference: "24235843983",
+//     subject:"Teltonika",
+//     date: "14/04/2023 12.56 PM ",
+//     user:"Andrei",
+//     company: "deltass",
+//     status:"Resolved"
+//   },
+// ];
 
 const Ticket = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
-
+  const ticketsData = useSelector((state) => state.ticketList.tickets);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [data, setData] = useState(ticketsData);
-  const [searchRefText, setSearchRefText] = useState("");
   const [searchSubjectText, setSearchSubjectText] = useState("");
   const [searchUserText, setSearchUserText] = useState("User");
   const [searchCompanyText, setSearchCompanyText] = useState("Company");
@@ -136,20 +137,10 @@ const Ticket = () => {
   const [searchFold, setSearchFold] = useState(true);
 
   useEffect(() => {
-    setData(
-      ticketsData.filter((item)=>{
-        return (!searchRefText || item.reference.toLocaleLowerCase().includes(searchRefText.toLocaleLowerCase())) 
-          && (!searchSubjectText || item.subject.toLocaleLowerCase().includes(searchSubjectText.toLocaleLowerCase()))
-          && (searchUserText=="User" ? item.user : (!searchUserText || item.user===searchUserText))
-          && (searchCompanyText=="Company" ? item.company : (!searchCompanyText || item.company===searchCompanyText));
-      })
-    )
-  }, [searchRefText,searchSubjectText,searchUserText,searchCompanyText]) 
-
-  const handleRef = (event) => {
-    const val = event.target.value;
-    setSearchRefText(val);
-  }; 
+    dispatch(getTicket())
+    setData(ticketsData)
+    // console.log(ticketsData)
+  }, [searchSubjectText,searchUserText,searchCompanyText]) 
 
   const handleSubject = (event) => {
     const val = event.target.value;
@@ -167,7 +158,6 @@ const Ticket = () => {
   };
 
   const handleClear=()=>{
-    setSearchRefText("")
     setSearchSubjectText("")
     setSearchUserText("User")
     setSearchCompanyText("Company")
@@ -197,10 +187,10 @@ const Ticket = () => {
   const handleChange=(e)=>{
     const {name,checked}=e.target;
     if(name==="allSelect"){
-      let tewmpUser=data.map((da)=>{return{...da,isChecked:checked}});
+      let tewmpUser=ticketsData.map((da)=>{return{...da,isChecked:checked}});
       setData(tewmpUser)
     }else{
-      let tewmpUser = data.map((da)=>da.reference===name?{...da,isChecked:checked}:da);
+      let tewmpUser = ticketsData.map((da)=>da.reference===name?{...da,isChecked:checked}:da);
       setData(tewmpUser)
     }
   }
@@ -212,7 +202,7 @@ const Ticket = () => {
           <div className="sub1-div1 d-flex justify-content-between align-items-center w-100">
             <div className="all-ticket-div1 h-100 d-flex justify-content-between">
               <p className="px-5 text-white d-flex justify-content-center align-items-center">
-                Total tickets <span className='ml-3'>{data.length}</span>
+                Total tickets <span className='ml-3'>{ticketsData.length}</span>
               </p>
               <p className="px-5 text-white d-flex justify-content-center align-items-center">
                 Pending <span className='ml-3'>{data?.filter(item => item.status === "Pending").length}</span>
@@ -246,13 +236,6 @@ const Ticket = () => {
                 <span>Search ticket</span>
               </div>
               <div className="sub2-subsub1-sub2-div1 d-flex justify-content-between align-items-center">
-                <input
-                  className="field-input"
-                  type="text"
-                  placeholder='Ref No.'
-                  value={searchRefText}
-                  onChange={handleRef}
-                />
                 <input
                   className="field-input"
                   type="text"
@@ -330,7 +313,6 @@ const Ticket = () => {
                     checked={data.filter(da=>da?.isChecked !== true).length < 1}
                   />
                 </div>
-                <p className='mb-0 text-center'>Reference No.</p>
                 <p className='mb-0 text-center'>Subject</p>
                 <p className='mb-0 text-center'>Date Time</p>
                 <p className='mb-0 text-center'>User</p>
@@ -347,12 +329,11 @@ const Ticket = () => {
                         <div className='item'>
                           <input
                             type='checkbox'
-                            name={item.reference}
+                            name={item.id}
                             onChange={handleChange}
                             checked={item?.isChecked || false}
                           />
                         </div>
-                        <p className='item'>{item.reference}</p>
                         <p className='item'>{item.subject}</p>
                         <p className='item'>{item.date}</p>
                         <p className='item'>{item.user}</p>
@@ -454,15 +435,6 @@ const Ticket = () => {
                     <input
                       className="field-input"
                       type="text"
-                      placeholder='Ref No.'
-                      value={searchRefText}
-                      onChange={handleRef}
-                    />
-                  </div>
-                  <div className="col-6 px-1">
-                    <input
-                      className="field-input"
-                      type="text"
                       placeholder='Subject'
                       value={searchSubjectText}
                       onChange={handleSubject}
@@ -545,10 +517,6 @@ const Ticket = () => {
                 <div id="import-ticket" key={index}>
                   <p id="sub1-import-ticket">{index + 1}</p>
                   <div className="subsub1-sub2-ticket-div2 d-flex flex-column align-items-center py-2 px-3">
-                    <div className="d-flex w-100">
-                      <p className="mb-0 px-2 col-4 text-white">Reference No.</p>
-                      <p className="mb-0 px-2 col-8 item justify-content-start">{item?.reference}</p>
-                    </div>
                     <div className="d-flex w-100">
                       <p className="mb-0 px-2 col-4 text-white">Subject</p>
                       <p className="mb-0 px-2 col-8 item justify-content-start">{item?.subject}</p>

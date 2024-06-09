@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-
+import { postTicket } from "../../services/axios";
 import "react-phone-number-input/style.css";
 import "./NewTicket.css";
+import axios from 'axios';
 
 const DATA = [
   {
@@ -26,22 +27,46 @@ const DATA = [
 const NewTicket = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [image, setImagePath] = useState('');
 
   const [formData, setFormData] = useState({
-    subject: "FMC130 Output Issue",
-    text: "This text is not editable as its the ticket raised by client.",
+    subject: "",
+    text: "",
+    image: ""
   });
 
   const handlData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handlSubmit = () => {
-    if (formData.text.length === 0) {
-      alert("sorry n");
-    } else if (formData.subject.length === 0) {
-      alert("sorry u");
+  const onChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+        let formDataFile = new FormData();
+        formDataFile.append('avatar', selectedFile);
+        var result = await axios.post('/api/common/uploadAvatar', formDataFile, {
+            headers: {
+                'x-access-token': localStorage.getItem('token')
+            },
+        });
+        setImagePath(result.data.filePath);
     }
+}
+  const handlSubmit = async () => {
+    if (formData.text.length === 0) {
+      alert("Enter Text");
+    } else if (formData.subject.length === 0) {
+      alert("Enter Subject");
+    }else{
+      var res = await postTicket(formData);
+      if (res?.status == 200) {
+        alert("New Ticket added successfully!")
+        navigate("/Ticket");
+      }else{
+        console.log(res)
+        alert(res.data.message)
+      }
+    }
+
   };
 
   return (
@@ -72,21 +97,11 @@ const NewTicket = () => {
           </div>
         </div>
         <div className={`d-flex w-100 my-5 ${isMobile && 'flex-column gap-5'}`}>
-          <div className="d-flex col-md-6 flex-column">
-            {DATA.map((item) => {
-              return (
-                <div className="sub1-left-subsub2-sub1-new-ticket-div1 text-center position-relative my-2">
-                  <span className="card-p">{item.subject}</span>
-                  <img className="position-absolute" src="./assets/redCross.svg" alt="none" />
-                </div>
-              );
-            })}
-          </div>
           <div className="right-subsub2-sub1-new-ticket-div1 d-flex col-md-6 justify-content-center">
             <span>Each file should Not be more than 20MB</span>
             <div className="sub1-right-subsub2-sub1-new-ticket-div1 position-relative">
-              <img className="ml-4" src="./assets/file.svg" alt="none" />
-              <input className="position-absolute" type="file"/>
+              <img className="ml-4" crossOrigin='*' src={image ? process.env.REACT_APP_URL + '/' + image : './assets/file.svg'} alt="none" />
+              <input className="position-absolute" type="file"  onChange={onChange}/>
             </div>
           </div>
         </div>

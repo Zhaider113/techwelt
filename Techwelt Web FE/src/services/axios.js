@@ -236,4 +236,19 @@ const postCompany = async (props) => {
     }
 }
 
-export { getGoogleAPIKey, userRegister, getResFromDev, showComandQueue, getUserNameList, activateUser, getHistoryList, commandSetting, updateDevice, signInUser, forgotPass, removeDevice, resetUser, getUser, getResponse, postRules, postCompany };
+
+const postTicket = async (props) => {
+    try {
+        var result = await axios.post("/api/ticket/addTicket", props, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem('token')
+            },
+        });
+        return result;
+    } catch (error) {
+        return error.response
+    }
+}
+
+export { getGoogleAPIKey, userRegister, getResFromDev, showComandQueue, getUserNameList, activateUser, getHistoryList, commandSetting, updateDevice, signInUser, forgotPass, removeDevice, resetUser, getUser, getResponse, postRules, postCompany, postTicket };
