@@ -140,7 +140,7 @@ const Ticket = () => {
     dispatch(getTicket())
     setData(ticketsData)
     // console.log(ticketsData)
-  }, [searchSubjectText,searchUserText,searchCompanyText]) 
+  }) 
 
   const handleSubject = (event) => {
     const val = event.target.value;
@@ -205,10 +205,10 @@ const Ticket = () => {
                 Total tickets <span className='ml-3'>{ticketsData.length}</span>
               </p>
               <p className="px-5 text-white d-flex justify-content-center align-items-center">
-                Pending <span className='ml-3'>{data?.filter(item => item.status === "Pending").length}</span>
+                Pending <span className='ml-3'>{ticketsData?.filter(item => item.status === "Pending").length}</span>
               </p>
               <p className="px-5 text-white d-flex justify-content-center align-items-center">
-                Resolved <span className='ml-3'>{data?.filter(item => item.status === "Resolved").length}</span>
+                Resolved <span className='ml-3'>{ticketsData?.filter(item => item.status === "Resolved").length}</span>
               </p>
             </div>
             <div className="d-flex">
@@ -402,7 +402,7 @@ const Ticket = () => {
           </div>
           <div className="sub1-div1 d-flex justify-content-between align-items-end w-100 p-0 my-3">
             <p className="px-3 text-white d-flex justify-content-evenly align-items-center mb-0">
-              Total tickets <span className="ml-3">{data?.length}</span>
+              Total tickets <span className="ml-3">{ticketsData?.length}</span>
             </p>
             <div className="d-flex">
               <div
@@ -512,7 +512,7 @@ const Ticket = () => {
             )}
           </div>
           <div className={`sub2-div2 d-flex flex-column px-4 w-100 overflow-auto ml-0 ${searchFold && 'folded'}`}>
-            {data?.map((item, index) => {
+            {ticketsData?.map((item, index) => {
               return (
                 <div id="import-ticket" key={index}>
                   <p id="sub1-import-ticket">{index + 1}</p>

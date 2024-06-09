@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import Webcam from "react-webcam";
-import { commandSetting } from "../../services/axios";
+import { commandSetting, getResponse } from "../../services/axios";
 import { SWITCH_MENU_VISIBLE, SWITCH_SIDEBAR_VISIBLE } from "../../redux/store/types";
 import { getDevices } from "../../redux/actions/devices";
 
@@ -57,6 +57,7 @@ const SideBar = (props) => {
   const devices = useSelector((state) => state.devicesList.devices);
   const showMenu = useSelector((state) => state.global.showMenu);
   const showSidebar = useSelector((state) => state.global.showSidebar);
+  // const user = useSelector((state) => state.auth.user);
 
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [simState, setSimState] = useState(false)
@@ -71,6 +72,7 @@ const SideBar = (props) => {
   const [vehicleTypeTag, setVehicleTypeTag] = useState("");
   const [selectedVeh, setSelectedVeh] = useState(null);
   const [selectedVehData, setSelectedVehData] = useState(null);
+  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -87,6 +89,19 @@ const SideBar = (props) => {
     else {
       navigate("/")
     }
+    const getData = async () => {
+      var res = await getResponse('/api/users/list', 'get');
+      if (res.status === 200) {
+        
+        setUserList(res?.data?.users);
+        console.log(userList)
+        userList?.map(index =>{
+          console.log(index.fname)
+        })
+      }
+    }
+
+    getData();
   }, [dispatch]);
 
   useEffect(() => {
@@ -145,12 +160,16 @@ const SideBar = (props) => {
     if (location.pathname === "/Dashboard") {
       var lat = devices?.at(id)?.vehicle?.teltonikas[devices?.at(id)?.vehicle?.teltonikas?.length - 1]?.lat
       var lng = devices?.at(id)?.vehicle?.teltonikas[devices?.at(id)?.vehicle?.teltonikas?.length - 1]?.lng
-      props?.locatePosition({ lat: lat, lng: lng })
+      if(lat && lng){
+        props?.locatePosition({ lat: lat, lng: lng })
+      }else{
+        console.log("Navigation Location error", lat, lng)
+      }
     }
   }
 
   const handleNavigation = (id) => {
-    console.log('handleNavigation')
+    console.log('handleNavigation', id)
     if (!devices) {
       console.log('device')
       localStorage.removeItem("token");
@@ -160,8 +179,12 @@ const SideBar = (props) => {
     if (location.pathname === "/Dashboard") {
       var lat = devices?.at(id)?.vehicle?.teltonikas[devices?.at(id)?.vehicle?.teltonikas?.length - 1]?.lat
       var lng = devices?.at(id)?.vehicle?.teltonikas[devices?.at(id)?.vehicle?.teltonikas?.length - 1]?.lng
-      props?.navigatePosition({ lat: lat, lng: lng })
-    }
+      if(lat && lng){
+        props?.navigatePosition({ lat: lat, lng: lng })
+      }else{
+        console.log("Navigation Location error", lat, lng)
+      }
+    } 
   }
 
   const handle1 = (title, id) => {
@@ -173,6 +196,7 @@ const SideBar = (props) => {
   };
 
   const handleEngine = (e, imei) => {
+    // alert("Engine");
     console.log(e.target.checked);
     let state = e.target.checked;
     if (state === false) {
@@ -252,10 +276,10 @@ const SideBar = (props) => {
     dispatch({type: SWITCH_SIDEBAR_VISIBLE, payload: !showSidebar});
     dispatch({type: SWITCH_MENU_VISIBLE, payload: false});
   }
-  const showCamera = ()=>{
-    console.log("Show camera")
-    // setCameraBtn(true)
-  }
+  const handleShowCamera = () => {
+    alert("camera")
+    setCameraBtn(true); // Update state to trigger re-render with camera visibility
+  };
   // setCameraBtn(true)
 
   if (!isAuthenticated) {
@@ -312,9 +336,10 @@ const SideBar = (props) => {
                   <div className="subsub1-sub2-div5 w-100 d-flex justify-content-evenly position-relative align-items-center">
                     <img className="position-absolute" src="./assets/user2.svg" alt="none" />
                     <select className="w-100 text-center" placeholder="Owner Name">
-                      <option>Owner Name</option>
-                      <option></option>
-                      <option></option>
+                      <option selected >Owner Name</option>
+                      {userList?.map((item)=>{
+                        <option> {item.fname} {item.lname}</option>
+                      })}
                     </select>
                   </div>
                   <input className="filter-input w-100 mt-3 text-center" placeholder="Search" value={searchText} onChange={(value) => handleText(value)} />
@@ -454,9 +479,9 @@ const SideBar = (props) => {
                             <img src="./assets/Battery.svg" alt="none" />
                             <p className="mt-5 mb-0 text-white">{selectedVehData?.vehicle?.batteryVolt?.toString()?.slice(0, 3)}V</p>
                           </div>
-                          <div className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center">
+                          <div onClick={()=>{handleShowCamera()}} className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center">
                             <img src="./assets/Pic7.svg" alt="none" />
-                            <p className="mt-5 mb-0 text-white" onClick={()=>{showCamera()}}>Camera</p>
+                            <p className="mt-5 mb-0 text-white" >Camera</p>
                             {/* <img className="mt-5 mb-0" style={{width: "1.5rem", height: "1.5rem"}} src="./assets/Group.svg" alt="none" /> */}
                           </div>
                         </div>
@@ -563,9 +588,10 @@ const SideBar = (props) => {
               <div className="subsub1-sub2-div5 w-100 d-flex justify-content-evenly position-relative align-items-center">
                 <img className="position-absolute" src="./assets/user2.svg" alt="none" />
                 <select className="w-100 text-center" placeholder="Owner Name">
-                  <option>Owner Name</option>
-                  <option></option>
-                  <option></option>
+                  <option selected>Owner Name</option>
+                  {userList?.map((item)=>{
+                    <option> {item.fname} {item.lname}</option>
+                  })}
                 </select>
               </div>
               <input className="filter-input w-100 mt-3 text-center" placeholder="Search" value={searchText} onChange={(value) => handleText(value)} />

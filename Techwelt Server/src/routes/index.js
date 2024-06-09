@@ -18,6 +18,7 @@ module.exports = () => {
   router.use("/common", commonRoutes);
   router.use("/alerts", alertRoutes);
   router.use("/company", companyRoutes);
+  router.use("/rules", rulesRoutes);
   router.use("/ticket", ticketRoutes);
 
   return router;
