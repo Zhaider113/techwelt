@@ -168,6 +168,20 @@
   left: 31rem;
 }
 
+.main-car-portal-side-bar-camera{
+  z-index: 999;
+  top: 22rem;
+  left: 81rem;
+  position: absolute;
+  border: 2px solid black;
+  height: 44%;
+  border-radius: 1rem;
+}
+
+.main-car-portal-side-bar-camera video{
+  height: 100%;
+  border-radius: 1rem;
+}
 .car-close-portal-side-bar {
   width: 2.5rem;
   height: 2.5rem;

@@ -277,11 +277,12 @@ const SideBar = (props) => {
     dispatch({type: SWITCH_MENU_VISIBLE, payload: false});
   }
   const handleShowCamera = () => {
-    alert("camera")
-    setCameraBtn(true); // Update state to trigger re-render with camera visibility
+    if(cameraBtn){
+      setCameraBtn(false);
+    }else{
+      setCameraBtn(true); 
+    }
   };
-  // setCameraBtn(true)
-
   if (!isAuthenticated) {
     return <></>
   }
@@ -482,6 +483,7 @@ const SideBar = (props) => {
                           <div onClick={()=>{handleShowCamera()}} className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center">
                             <img src="./assets/Pic7.svg" alt="none" />
                             <p className="mt-5 mb-0 text-white" >Camera</p>
+                            <input type="button" value="Camera" onClick={()=>{handleShowCamera()}} />
                             {/* <img className="mt-5 mb-0" style={{width: "1.5rem", height: "1.5rem"}} src="./assets/Group.svg" alt="none" /> */}
                           </div>
                         </div>
@@ -540,11 +542,13 @@ const SideBar = (props) => {
                       </div>
                     </div> : ''
                   </div>
+                  
                 </div>
               )}
             </div>
           </div>
         )}
+        
       </>
     ) : (
       <div className="d-flex flex-column sidebar">
@@ -732,7 +736,7 @@ const SideBar = (props) => {
                         <img src="./assets/Battery.svg" alt="none" />
                         <p className="mt-5 mb-0 text-white">{selectedVehData?.vehicle?.batteryVolt?.toString()?.slice(0, 3)}V</p>
                       </div>
-                      <div className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center">
+                      <div className="sub1-subsub1-sub2-car-portal-side-bar d-flex col-3 flex-column align-items-center" onClick={()=>{handleShowCamera()}}>
                         <img src="./assets/Pic7.svg" alt="none" />
                         <p className="mt-5 mb-0 text-white">Camera</p>
                         {/* <img className="mt-5 mb-0" style={{width: "1.5rem", height: "1.5rem"}} src="./assets/Group.svg" alt="none" /> */}
@@ -991,6 +995,11 @@ const SideBar = (props) => {
         </div>
       </div>
     )}
+      {cameraBtn && (
+        <div className="main-car-portal-side-bar-camera">
+          <Webcam></Webcam>
+        </div>
+      )}
     </>
   );
 };
