@@ -11,6 +11,7 @@ module.exports = () => {
   const rulesRoutes = require("./rules")(router)
   const companyRoutes = require("./company")(router)
   const ticketRoutes = require("./ticket")(router)
+  const geofenceRoutes = require("./geofence")(router)
 
   router.use("/vehicles", vehiclesRoutes);
   router.use("/teltonika", teltonikaRoutes);
@@ -20,6 +21,7 @@ module.exports = () => {
   router.use("/company", companyRoutes);
   router.use("/rules", rulesRoutes);
   router.use("/ticket", ticketRoutes);
+  router.use("/zone", geofenceRoutes);
 
   return router;
 };

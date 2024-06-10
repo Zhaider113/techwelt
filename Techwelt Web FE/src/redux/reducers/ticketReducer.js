@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
         case GET_TICKET:
             return {
                 ...state,
-                companies: action.payload,
+                tickets: action.payload,
                 loading: false,
             };
         case TICKET_ERROR:

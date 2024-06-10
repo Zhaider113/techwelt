@@ -1,35 +1,65 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import mapboxgl from 'mapbox-gl';
-
+import { MapContainer, TileLayer, FeatureGroup } from "react-leaflet";
+import { EditControl } from "react-leaflet-draw";
+import "leaflet/dist/leaflet.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 import "./Geofance.css";
-
+import L from "leaflet";
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png",
+});
 
 const Geofance = () => {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
+  const ZOOM_LEVEL = 12;
+  const mapRef = useRef();
+  const [center, setCenter] = useState({ lat: 24.4539, lng: 54.3773 });
+  const [mapLayers, setMapLayers] = useState();
+  // const [zoneData, setZone] = useState({});
+
+  const _created = (e) =>{
+    console.log(e.layer, "e.layers");
+    const { layerType, layer } = e;
+    console.log(layer._latlng, "layers")
+    const { _leaflet_id, _latlng } = layer;
+    // setZone({"id": _leaflet_id, "lat": _latlng.lat, "lng": _latlng.lng, "type": layerType});
+    let zoneData = {
+      "type": layerType,
+      "lat": _latlng.lat,
+      "lng": _latlng.lng 
+    }
+    handleZone(zoneData);
+  } 
 
   const devices = useSelector((state) => state.devicesList.devices);
 
-  const [center, setCenter] = useState({ lat: 30.3048216, lng: -9.4867983 });
-  const [bound1, setBound1] = useState()
-  const [isBound1, setIsBound1] = useState(true)
-  const [isBound2, setIsBound2] = useState(false)
-  const [bound2, setBound2] = useState()
+  // const [center, setCenter] = useState({ lat: 30.3048216, lng: -9.4867983 });
   const [zone1, setZone1] = useState(".1rem solid red");
-  const [zone1State, setZone1State] = useState(true);
   const [zone2, setZone2] = useState(".1rem solid grey");
-  const [zone2State, setZone2State] = useState(false);
   const [zone3, setZone3] = useState(".1rem solid grey");
-  const [zone3State, setZone3State] = useState(false);
-  const [radius, setRadius] = useState(0);
-  const [circleCenter, setCircleCenter] = useState();
   const [users, setUsers] = useState([])
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
   const [searchPlateText, setSearchPlateText] = useState("");
   const [devicesData, setDevicesData] = useState(devices);
 
+  const osm = {
+    url:
+            "https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=fXmTwJM642uPLZiwzhA1",
+        attribution:
+            '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  }
+  
   const circleOptions = {
     fillColor: "coral",
     fillOpacity: 0.3,
@@ -92,29 +122,8 @@ const Geofance = () => {
     }
   }, [])
 
-  const handleZone = (val, state) => {
-    if (val == "zone1") {
-      setZone1State(true);
-      setZone2State(false);
-      setZone3State(false);
-      setZone1(".1rem solid red");
-      setZone2(".1rem solid grey");
-      setZone3(".1rem solid grey");
-    } else if (val == "zone2") {
-      setZone2State(true);
-      setZone1State(false);
-      setZone3State(false);
-      setZone2(".1rem solid red");
-      setZone1(".1rem solid grey");
-      setZone3(".1rem solid grey");
-    } else {
-      setZone3State(true);
-      setZone2State(false);
-      setZone1State(false);
-      setZone3(".1rem solid red");
-      setZone2(".1rem solid grey");
-      setZone1(".1rem solid grey");
-    }
+  const handleZone = (zoneData) => {
+    console.log(zoneData, "map layrs")
   };
 
   const handleChange = (e) => {
@@ -193,29 +202,48 @@ const Geofance = () => {
         </div>
       </div>
       <div className="geofence-div2">
-<div id="map-container" style={{ width: '100%', height: '400px' }} />
-        <div
-          className="sub1-geofence-div2"
-          style={{ border: zone1 }}
-          onClick={() => handleZone("zone1", true)}
-        >
-          <img src="./assets/img1.png" alt="none" />
+        <div id="map-container" style={{ width: '100%', height: '400px', display: "none" }} />
+          <div
+            className="sub1-geofence-div2"
+            style={{ border: zone1 }}
+            onClick={() => handleZone("zone1", true)}
+          >
+            <img src="./assets/img1.png" alt="none" />
+          </div>
+          <div
+            className="sub2-geofence-div2"
+            style={{ border: zone2 }}
+            onClick={() => handleZone("zone2", true)}
+          >
+            <img src="./assets/img2.png" alt="none" />
+          </div>
+          <div className="sub3-geofence-div2">
+            <img
+              src="./assets/img3.png"
+              alt="none"
+              style={{ border: zone3 }}
+              onClick={() => handleZone("zone3", true)}
+            />
         </div>
-        <div
-          className="sub2-geofence-div2"
-          style={{ border: zone2 }}
-          onClick={() => handleZone("zone2", true)}
-        >
-          <img src="./assets/img2.png" alt="none" />
-        </div>
-        <div className="sub3-geofence-div2">
-          <img
-            src="./assets/img3.png"
-            alt="none"
-            style={{ border: zone3 }}
-            onClick={() => handleZone("zone3", true)}
+        <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
+        <FeatureGroup>
+          <EditControl
+            position="topleft"
+            onCreated={_created}
+            draw={
+              {
+              circlemarker: false,
+              marker: false,
+              polyline: false,
+              }
+            }
           />
-        </div>
+        </FeatureGroup>
+        <TileLayer
+          url={osm.url}
+          attribution={osm.attribution}
+        />
+      </MapContainer>
       </div>
     </div>
   );

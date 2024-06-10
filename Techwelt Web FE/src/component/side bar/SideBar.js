@@ -514,6 +514,8 @@ const SideBar = (props) => {
                                   deviceImei: selectedVehData?.vehicle?.deviceImei,
                                   vehicleType: selectedVehData?.vehicle?.title,
                                   vehicleName: selectedVehData?.vehicle?.vehicleName,
+                                  lat: selectedVehData?.vehicle?.lat,
+                                  lng: selectedVehData?.vehicle?.lng,
                                   selectedVeh: selectedVeh
                                 }
                               })

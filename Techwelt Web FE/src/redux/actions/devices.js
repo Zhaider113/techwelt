@@ -1,5 +1,5 @@
 import { getResponse, signInUser } from "../../services/axios";
-import { GET_DEVICES, DEVICES_ERROR, GET_ALERTS, ALERTS_ERROR, GET_RULES, RULES_ERROR, GET_COMPANY, COMPANY_ERROR,  GET_USERTOKEN, GET_TOKENERROR, LOG_OUT, GET_TICKET, TICKET_ERROR } from "../store/types";
+import { GET_DEVICES, DEVICES_ERROR, GET_ALERTS, ALERTS_ERROR, GET_RULES, RULES_ERROR, GET_COMPANY, COMPANY_ERROR,  GET_USERTOKEN, GET_TOKENERROR, LOG_OUT, GET_TICKET, TICKET_ERROR, GET_ZONE, ZONE_ERROR } from "../store/types";
 
 export const getDevices = (props) => async (dispatch) => {
   try {
@@ -110,6 +110,29 @@ export const getTicket = (props) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TICKET_ERROR,
+      payload: error,
+    });
+  }
+};
+
+export const getZone = (props) => async (dispatch) => {
+  try {
+    var response = await getResponse('/api/zone/zoneList', 'post', props);
+    console.log(response,'response')
+    if (response.status === 401) {
+      dispatch({
+        type: LOG_OUT
+      })
+    }
+    if (response.status === 200) {
+      dispatch({
+        type: GET_ZONE,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ZONE_ERROR,
       payload: error,
     });
   }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./History.css";
 import DatePicker from "react-datepicker";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-
+import mapboxgl from 'mapbox-gl';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 const History = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
@@ -38,7 +39,18 @@ const History = () => {
     navigate("/HistoryPlayBack", { state: { startDate: startDate, endDate: endDate, vehicleName: data?.vehicleName, deviceImei: data.deviceImei, selectedVehicle: data.selectedVehicle } })
   }
 
-  const [center] = useState({ lat: 34, lng: -118 });
+  const [center] = useState({ lat: 37.0902, lng: 95.7129 });
+  let mapboxToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN; // Replace with your Mapbox access token
+
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: "map-container",
+      style: "mapbox://styles/mapbox/streets-v11", // Choose a Mapbox style
+      center: center,
+      zoom: 5,
+      accessToken: mapboxToken // Set your access token
+    });
+  }, []);
   let apikey = localStorage.getItem("apikey");
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -156,17 +168,8 @@ const History = () => {
             </div>
             <div className="histroy-div2">
               <div className="dashboard-contaner">
-                {
-                  isLoaded &&
-                  <GoogleMap
-                    // onLoad={onMapLoad}
-                    mapContainerClassName="map-container"
-                    center={center}
-                    zoom={15}
-                  >
-
-                  </GoogleMap>
-                }</div>
+              <div id="map-container" style={{ width: "100%", height: "800px" }} />
+              </div>
               {/* <img src="./assets/map.png" alt="none" className="history-map" /> */}
             </div>
           </div>

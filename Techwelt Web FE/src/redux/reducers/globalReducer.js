@@ -3,7 +3,7 @@ import { SWITCH_MENU_VISIBLE, SWITCH_SIDEBAR_VISIBLE, TOGGLE_MAP_MODE } from "..
 const initialState = {
   showMenu: false,
   showSidebar: false,
-  mapMode: 1,
+  mapMode: 2,
 };
 
 export default function (state = initialState, action) {
